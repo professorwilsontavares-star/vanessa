@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz da Vanessa: Contabilidade Pública, meus erros</title>
+<style>
+  :root{--navy:#1E2B38; --q:#0f766e; --q-cl:#e6f5f2; --laranja:#FFE4CC; --coral:#E25E42; --ok:#2e7d4f; --ok-cl:#d7f0df; --no:#c0392b; --no-cl:#fbe0dc; --cinza:#64748b;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif; background:linear-gradient(160deg,#e6f5f2,#c9e9e4); color:var(--navy); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:70px 20px 20px; line-height:1.55;}
+  .app{width:100%; max-width:640px; background:#fff; border-radius:24px; box-shadow:0 12px 40px rgba(15,118,110,.16); overflow:hidden;}
+  header{background:linear-gradient(135deg,#0f766e,#0b4f4a); color:#fff; padding:22px 26px 18px;}
+  header .selo{font-size:.72rem; letter-spacing:1.5px; text-transform:uppercase; opacity:.8; font-weight:700;}
+  header h1{font-size:1.35rem; margin-top:4px;}
+  .barra-topo{display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-size:.9rem; font-weight:700;}
+  .progresso{height:9px; background:rgba(255,255,255,.25); border-radius:20px; margin-top:10px; overflow:hidden;}
+  .progresso span{display:block; height:100%; width:0; background:var(--coral); border-radius:20px; transition:width .35s ease;}
+  main{padding:26px 26px 30px;}
+  .pergunta{font-size:1.2rem; font-weight:800; color:var(--navy); margin-bottom:20px; min-height:60px;}
+  .alternativas{display:flex; flex-direction:column; gap:12px;}
+  .alt{text-align:left; font-size:1.02rem; padding:15px 18px; border:2px solid #c9e9e4; background:#f3faf8; border-radius:14px; cursor:pointer; transition:all .15s ease; display:flex; align-items:center; gap:12px; font-family:inherit; color:var(--navy);}
+  .alt:hover:not(:disabled){border-color:var(--q); background:var(--q-cl); transform:translateY(-1px);}
+  .alt:disabled{cursor:default;}
+  .alt .letra{flex:0 0 30px; height:30px; border-radius:50%; background:var(--q); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.95rem;}
+  .alt.certo{border-color:var(--ok); background:var(--ok-cl);} .alt.certo .letra{background:var(--ok);}
+  .alt.errado{border-color:var(--no); background:var(--no-cl);} .alt.errado .letra{background:var(--no);}
+  .feedback{margin-top:20px; padding:15px 18px; border-radius:14px; display:none; font-size:1rem;}
+  .feedback.mostrar{display:block;}
+  .feedback.ok{background:var(--ok-cl);}
+  .feedback.no{background:var(--no-cl);}
+  .feedback b:first-child{display:block; margin-bottom:3px;}
+  .proxima{margin-top:20px; width:100%; padding:15px; font-size:1.1rem; font-weight:800; background:var(--coral); color:#fff; border:none; border-radius:14px; cursor:pointer; font-family:inherit; display:none;}
+  .proxima.mostrar{display:block;} .proxima:hover{filter:brightness(1.08);}
+  .final{text-align:center; padding:14px 6px;}
+  .final .emoji{font-size:3.4rem;} .final h2{font-size:1.6rem; margin:10px 0;}
+  .final .placar{font-size:1.15rem; color:var(--cinza); margin-bottom:6px;}
+  .final .nota{font-size:3rem; font-weight:900; color:var(--q); margin:6px 0;}
+  .final .recado{background:var(--laranja); border-radius:14px; padding:14px 18px; margin:18px 0; color:var(--navy);}
+  .refazer{padding:14px 28px; font-size:1.05rem; font-weight:800; background:var(--q); color:#fff; border:none; border-radius:14px; cursor:pointer; font-family:inherit;}
+</style>
+</head>
+<body>
+<a href="index.html" class="btn-voltar-hub" style="position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:9999;display:inline-flex;align-items:center;gap:7px;background:#E25E42;color:#fff;text-decoration:none;font-weight:800;font-size:1rem;padding:11px 18px;border-radius:30px;box-shadow:0 4px 14px rgba(0,0,0,.3);font-family:'Segoe UI',system-ui,Arial,sans-serif;">← Voltar</a>
+<div class="app">
+  <header>
+    <div class="selo">Contabilidade Pública · Meus erros · Quiz</div>
+    <h1>Orçamentário, patrimonial e NBC TSP 🏛️</h1>
+    <div class="barra-topo"><span id="contador">Questão 1</span><span id="placar">Acertos: 0</span></div>
+    <div class="progresso"><span id="barra"></span></div>
+  </header>
+  <main id="palco">
+    <div class="pergunta" id="pergunta"></div>
+    <div class="alternativas" id="alternativas"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="proxima" id="proxima">Próxima ➜</button>
+  </main>
+</div>
+<script>
+const questoes = [
+  // bem fáceis
+  { q:"O empenho da despesa gera...", alt:["nenhum lançamento patrimonial","uma VPD","um passivo com o fornecedor"], c:0,
+    e:"Empenho é só orçamentário. O passivo nasce com a entrega do bem ou do serviço." },
+  { q:"A entrega do material comprado pela entidade é uma variação...", alt:["qualitativa","quantitativa","orçamentária"], c:0,
+    e:"Entra estoque e nasce o passivo com o fornecedor: só troca de elementos." },
+  { q:"O pagamento de uma despesa já liquidada é uma variação...", alt:["qualitativa","quantitativa diminutiva","quantitativa aumentativa"], c:0,
+    e:"Sai caixa e some o passivo. A situação patrimonial líquida não muda." },
+  { q:"O consumo de material de limpeza que estava em estoque é...", alt:["uma VPD (quantitativa)","uma variação qualitativa","um fato só orçamentário"], c:0,
+    e:"O estoque sai e nada entra no lugar: reduz a situação patrimonial líquida." },
+  { q:"O recebimento de uma caução em dinheiro é...", alt:["variação qualitativa","receita orçamentária","VPA"], c:0,
+    e:"Entra caixa e nasce a obrigação de devolver. É ingresso extraorçamentário." },
+  { q:"A doação de um bem móvel recebida pela entidade gera...", alt:["só uma VPA","receita orçamentária de capital","ingresso extraorçamentário"], c:0,
+    e:"Não entra dinheiro, então não há receita nem ingresso. Doação em dinheiro, sim, é receita orçamentária." },
+  { q:"No PCASP, a classe 3 registra...", alt:["as VPD","o passivo","a execução do orçamento"], c:0,
+    e:"1 ativo, 2 passivo e PL, 3 VPD, 4 VPA, 5 e 6 orçamento, 7 e 8 controle." },
+  { q:"No PCASP, a classe 6 registra...", alt:["a execução do orçamento","a aprovação do orçamento","os controles credores"], c:0,
+    e:"Classe 5 = aprovação do orçamento. Classe 6 = execução." },
+  { q:"A conta “Crédito Disponível” é...", alt:["dotação orçamentária não empenhada","direito a receber (ativo)","receita a arrecadar"], c:0,
+    e:"É crédito orçamentário, classe 6. A palavra “crédito” engana." },
+  { q:"Multas e juros de mora sobre uma receita de capital são receita...", alt:["corrente","de capital","extraorçamentária"], c:0,
+    e:"Multas e juros de mora são sempre receita corrente. O acessório não herda a categoria do principal." },
+
+  // variações e orçamentário x patrimonial
+  { q:"Qual fato é independente da execução orçamentária?", alt:["distribuição gratuita de alimentos já em estoque","recebimento de doação em dinheiro","liquidação de despesa com serviços"], c:0,
+    e:"O estoque já passou pelo orçamento na compra. Doação em dinheiro é receita orçamentária, então é dependente." },
+  { q:"Qual fato é independente da execução orçamentária?", alt:["reconhecimento da depreciação","arrecadação de imposto","pagamento de restos a pagar"], c:0,
+    e:"Depreciação é só patrimonial. Arrecadação e pagamento passam pelo caixa e pelo orçamento." },
+  { q:"Material entregue em 30/12, liquidado em 06/01, pago em 31/01 e consumido em fevereiro. As variações qualitativas são em...", alt:["30/12 e 31/01","30/12 e 06/01","06/01 e fevereiro"], c:0,
+    e:"Entrega e pagamento são trocas. Liquidação não tem efeito patrimonial. O consumo é a VPD." },
+  { q:"Serviço prestado em 2023 e não registrado, empenhado e liquidado em 2024 como DEA. Em 2024 registra-se...", alt:["variação quantitativa contra superávit/déficit acumulado","variação qualitativa","só a despesa orçamentária, sem efeito patrimonial"], c:0,
+    e:"O fato gerador foi em 2023: o ajuste vai para resultados acumulados, como ajuste de exercícios anteriores." },
+  { q:"Na NBC TSP, receita é...", alt:["aumento da situação patrimonial líquida","entrada de recursos no caixa","ingresso que financia programas do orçamento"], c:0,
+    e:"Enfoque patrimonial. Falar em caixa ou em financiar programas é a língua da Lei 4.320." },
+
+  // PCASP
+  { q:"A inscrição de restos a pagar e a execução de restos a pagar ficam, respectivamente, nas classes...", alt:["5 e 6","6 e 5","2 e 6"], c:0,
+    e:"Inscrição é aprovação (5). Execução é execução (6)." },
+  { q:"O lançamento de uma receita tributária é registrado...", alt:["D créditos a receber (1) / C VPA (4)","D crédito disponível (6) / C receita realizada (6)","D caixa (1) / C receita a realizar (5)"], c:0,
+    e:"Lançamento é fato patrimonial. A classe 6 registra a arrecadação." },
+  { q:"A disponibilidade por destinação de recursos utilizada fica na classe...", alt:["8 (controles credores)","7 (controles devedores)","2 (passivo)"], c:0,
+    e:"Classes 5 e 7 = o que nasce. Classes 6 e 8 = o que se executa e se consome." },
+
+  // NBC TSP Estrutura Conceitual
+  { q:"Qual destes NÃO é elemento das demonstrações na NBC TSP?", alt:["situação patrimonial líquida","contribuição dos proprietários","distribuição aos proprietários"], c:0,
+    e:"Os seis elementos: ativo, passivo, receita, despesa, contribuição e distribuição. A SPL é o resíduo." },
+  { q:"O recebimento de caução em dinheiro gera, na NBC TSP...", alt:["um ativo","um passivo financeiro","uma receita"], c:0,
+    e:"Gera ativo (o dinheiro) e passivo (devolver). “Passivo financeiro” é termo da Lei 4.320." },
+  { q:"É base de mensuração exclusiva de passivo:", alt:["custo de liberação","custo de reposição","preço líquido de venda"], c:0,
+    e:"Passivo: liberação, cumprimento, preço presumido. Reposição e preço líquido de venda são de ativo." },
+  { q:"Serve tanto para ativo quanto para passivo:", alt:["custo histórico","valor em uso","custo de cumprimento"], c:0,
+    e:"Custo histórico e valor de mercado valem para os dois." },
+  { q:"A avaliação da capacidade financeira depende de qual base?", alt:["valor de mercado","custo de reposição","custo histórico"], c:0,
+    e:"Capacidade financeira = quanto se receberia na venda. O custo de reposição NÃO informa isso." },
+  { q:"Sobre o custo histórico, é correto:", alt:["pode ser alocado como despesa por depreciação","deve ser ajustado às mudanças de preço","é um valor de saída"], c:0,
+    e:"Custo histórico é valor de entrada e não se altera pelos preços (item 7.14)." },
+  { q:"São usuários primários dos RCPGs:", alt:["usuários dos serviços e provedores de recursos","auditores e agências de rating","apenas os órgãos de controle"], c:0,
+    e:"Usuários dos serviços e provedores de recursos, e seus representantes (ex.: o deputado)." },
+  { q:"Na NBC TSP, custo-benefício é...", alt:["uma restrição à informação","uma característica qualitativa fundamental","uma característica de melhoria"], c:0,
+    e:"Restrições: materialidade, custo-benefício e equilíbrio. A divisão fundamental x melhoria é do CPC 00." },
+
+  // estoques e custos
+  { q:"Estoque mantido para distribuição gratuita é mensurado pelo menor entre o custo e...", alt:["o custo corrente de reposição","o valor realizável líquido","o valor justo na distribuição"], c:0,
+    e:"VRL é para estoque de venda. Estoque recebido sem contraprestação: valor justo na data da aquisição." },
+  { q:"Medicamentos: preço 72.000, desconto comercial 5.000, frete 3.000. Custo de reposição depois: 71.000. O estoque fica em...", alt:["70.000","71.000","75.000"], c:0,
+    e:"Custo = 72.000 − 5.000 + 3.000 = 70.000. Fica o menor entre custo e reposição." },
+  { q:"Para comparar objetos de custo final entre entidades, a NBC TSP 34 exige...", alt:["absorção integral","custeio direto","custeio variável"], c:0,
+    e:"finAL → integrAL. Para objeto intermediário, qualquer método." },
+  { q:"O ABC, na NBC TSP 34, é...", alt:["técnica de rastreamento de custos indiretos","método de custeio obrigatório","sinônimo de custeio direto"], c:0,
+    e:"Não é método de custeio. Rastreia indiretos até o objeto de custo." },
+  { q:"Intangível comprado a prazo acima do preço à vista: a diferença é...", alt:["VPD de juros","parte do custo do intangível","ativo de VPD a apropriar"], c:0,
+    e:"MCASP: a diferença é reconhecida como variação patrimonial diminutiva com juros." }
+];
+function embaralhar(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function preparar(){ const faceis=questoes.slice(0,10), resto=questoes.slice(10); return embaralhar(faceis.slice()).concat(embaralhar(resto.slice())).map(q=>{ const alts=q.alt.map((t,i)=>({t,c:i===q.c})); embaralhar(alts); return {q:q.q, alt:alts.map(a=>a.t), c:alts.findIndex(a=>a.c), e:q.e}; }); }
+let jogo = preparar(); let atual=0, acertos=0; const letras=["A","B","C"]; const $=id=>document.getElementById(id);
+function render(){ const it=jogo[atual]; $("contador").textContent=`Questão ${atual+1} de ${jogo.length}`; $("placar").textContent=`Acertos: ${acertos}`; $("barra").style.width=`${(atual/jogo.length)*100}%`; $("pergunta").textContent=it.q; const b=$("alternativas"); b.innerHTML=""; it.alt.forEach((t,i)=>{ const x=document.createElement("button"); x.className="alt"; x.innerHTML=`<span class="letra">${letras[i]}</span><span>${t}</span>`; x.onclick=()=>responder(i); b.appendChild(x); }); const f=$("feedback"); f.className="feedback"; f.innerHTML=""; $("proxima").className="proxima"; $("proxima").textContent=atual===jogo.length-1?"Ver resultado 🏁":"Próxima ➜"; }
+function responder(e){ const it=jogo[atual]; document.querySelectorAll(".alt").forEach((b,i)=>{ b.disabled=true; if(i===it.c)b.classList.add("certo"); if(i===e&&e!==it.c)b.classList.add("errado"); }); const f=$("feedback"); if(e===it.c){acertos++; f.className="feedback ok mostrar"; f.innerHTML=`<b>✅ Acertou!</b>${it.e}`;} else {f.className="feedback no mostrar"; f.innerHTML=`<b>❌ Quase!</b> A resposta certa é <b>${letras[it.c]}</b>. ${it.e}`;} $("placar").textContent=`Acertos: ${acertos}`; $("proxima").classList.add("mostrar"); }
+$("proxima").onclick=()=>{ atual++; if(atual<jogo.length)render(); else final(); };
+function final(){ const t=jogo.length; const nota=Math.round((acertos/t)*100)/10; const p=acertos/t; let e,m; if(p>=0.9){e="🏆";m="Excelente! Esse bloco está firme. Refaça daqui a 7 dias para não esquecer.";} else if(p>=0.7){e="😃";m="Muito bom! Revise os cartões dos que errou e refaça amanhã.";} else if(p>=0.45){e="🙂";m="Bom começo. Leia os cartões e refaça amanhã.";} else {e="💪";m="Sem problema. Leia os cartões com calma e tente de novo.";} $("barra").style.width="100%"; $("contador").textContent="Fim do quiz"; $("palco").innerHTML=`<div class="final"><div class="emoji">${e}</div><h2>Quiz concluído!</h2><div class="placar">Você acertou <b>${acertos}</b> de <b>${t}</b></div><div class="nota">Nota ${nota}</div><div class="recado">${m}</div><button class="refazer" onclick="reiniciar()">🔀 Embaralhar e refazer</button></div>`; }
+function reiniciar(){ atual=0; acertos=0; jogo=preparar(); $("palco").innerHTML=`<div class="pergunta" id="pergunta"></div><div class="alternativas" id="alternativas"></div><div class="feedback" id="feedback"></div><button class="proxima" id="proxima">Próxima ➜</button>`; $("proxima").onclick=()=>{ atual++; if(atual<jogo.length)render(); else final(); }; render(); }
+render();
+</script>
+</body>
+</html>
