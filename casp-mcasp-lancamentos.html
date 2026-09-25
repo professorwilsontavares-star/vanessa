@@ -35,6 +35,7 @@ h2.parte{font-size:1.2rem;margin:26px 0 4px;color:var(--accent)} h3.cap{font-siz
 .dcl .v{color:var(--muted);font-size:.82rem}
 .oculto .pt{display:none} .revelar{display:none;margin-top:6px}
 .oculto .revelar{display:inline-block} .revelar button{font:inherit;border:1px dashed var(--accent);background:transparent;color:var(--accent);border-radius:8px;padding:5px 12px;cursor:pointer}
+.vista{float:right;font:inherit;font-size:.82rem;font-weight:700;border:1px solid var(--accent);background:var(--card);color:var(--accent);border-radius:999px;padding:4px 12px;cursor:pointer;margin:0 0 6px 8px}.vista:hover{background:var(--accent);color:#fff}.lc.ja{opacity:.55}.lc.ja .vista{background:var(--accent);color:#fff}
 .mais{display:block;margin:18px auto;font:inherit;background:var(--accent);color:#fff;border:0;border-radius:10px;padding:10px 18px;cursor:pointer}
 @media (max-width:560px){.dcl{grid-template-columns:18px 1fr}.dcl .nm{grid-column:2}}
 </style>
@@ -55,7 +56,7 @@ Cada fato gera até três registros ao mesmo tempo, um em cada natureza da infor
   <div class="linha" id="partes"></div>
   <div class="linha"><select id="cap"></select></div>
   <div class="linha" id="nats"></div>
-  <div class="linha"><span class="cont" id="cont"></span></div>
+  <div class="linha"><button class="chip" id="verVistas">Mostrar as vistas</button><span class="cont" id="cont"></span></div>
 </div>
 <div id="lista"></div>
 <button class="mais" id="mais">Mostrar mais</button>
@@ -68,7 +69,10 @@ const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""
 DADOS.forEach(b => { b._txt = norm([b.fato,b.secao,b.cap,...b.partidas.flatMap(p=>p.linhas.map(l=>l.conta+" "+l.nome))].join(" ")); });
 const partes = [...new Set(DADOS.map(b=>b.parte))];
 const nomeParte = {}; DADOS.forEach(b => nomeParte[b.parte] = b.parteNome);
-let fParte = "Todas", fCap = "", fNat = new Set(NATS), estudo = false, limite = 60;
+let fParte = "Todas", fCap = "", fNat = new Set(NATS), estudo = false, limite = 60, mostrarVistas = false;
+const CHAVE = "vanessa-mcasp-lancamentos-vistas";
+let vistas = new Set(); try { vistas = new Set(JSON.parse(localStorage.getItem(CHAVE) || "[]")); } catch(e) {}
+function salvar(){ try { localStorage.setItem(CHAVE, JSON.stringify([...vistas])); } catch(e) {} }
 function chips(){
   document.getElementById("partes").innerHTML = ["Todas",...partes].map(p=>`<button class="chip ${p===fParte?"on":""}" data-p="${p}">${p==="Todas"?"Todas as Partes":p+": "+esc(nomeParte[p]||"")}</button>`).join("");
   document.getElementById("nats").innerHTML = NATS.map(n=>`<button class="chip ${fNat.has(n)?"on":""}" data-n="${n}">${n}</button>`).join("");
@@ -77,17 +81,18 @@ function chips(){
 }
 function filtrados(){
   const q = norm(document.getElementById("busca").value.trim());
-  return DADOS.filter(b => (fParte==="Todas"||b.parte===fParte) && (!fCap||(b.parte+"|"+b.cap)===fCap) && b.partidas.some(p=>fNat.has(p.natureza)) && (!q || q.split(/\s+/).every(t=>b._txt.includes(t))));
+  return DADOS.filter(b => (fParte==="Todas"||b.parte===fParte) && (!fCap||(b.parte+"|"+b.cap)===fCap) && b.partidas.some(p=>fNat.has(p.natureza)) && (!q || q.split(/\s+/).every(t=>b._txt.includes(t))) && (mostrarVistas || !vistas.has(b.id)));
 }
 function render(){
   const lista = filtrados(); const el = document.getElementById("lista");
-  document.getElementById("cont").textContent = `${lista.length} lançamentos`;
+  document.getElementById("cont").textContent = `${vistas.size} de ${DADOS.length} vistas · ${lista.length} na tela`;
   let html = "", ultP = "", ultC = "";
   lista.slice(0,limite).forEach(b => {
     if (b.parte!==ultP){ html += `<h2 class="parte">${b.parte}: ${esc(b.parteNome)}</h2>`; ultP=b.parte; ultC=""; }
     if (b.cap!==ultC){ html += `<h3 class="cap">${esc(b.cap||"(sem capítulo)")}</h3>`; ultC=b.cap; }
     const pts = b.partidas.filter(p=>fNat.has(p.natureza)).map(p=>`<div class="pt ${p.natureza}"><span class="nat ${p.natureza}">${p.natureza}</span><div class="dcl">${p.linhas.map(l=>`<span class="${l.dc==="D"?"d":"c"}">${l.dc}</span><code>${esc(l.conta)}</code><span class="nm">${esc(l.nome)}${l.valor?` <span class="v">${esc(l.valor)}</span>`:""}</span>`).join("")}</div></div>`).join("");
-    html += `<div class="lc ${estudo?"oculto":""}"><div class="meta">${esc(b.secao||"")} · MCASP p. ${b.pag}</div><p class="fato">${esc(b.fato||"(lançamento sem texto de apoio)")}</p>${pts}</div>`;
+    const ja = vistas.has(b.id);
+    html += `<div class="lc ${ja?"ja":""}" data-id="${b.id}"><button class="vista">${ja?"Desfazer":"&#10003; Vista"}</button><div class="meta">${esc(b.secao||"")} · MCASP p. ${b.pag}</div><p class="fato">${esc(b.fato||"(lançamento sem texto de apoio)")}</p>${pts}</div>`;
   });
   el.innerHTML = html || "<p>Nada encontrado.</p>";
   document.getElementById("mais").style.display = lista.length>limite ? "block" : "none";
@@ -95,12 +100,12 @@ function render(){
 document.addEventListener("click", e => {
   const p=e.target.closest("[data-p]"); if(p){ fParte=p.dataset.p; fCap=""; limite=60; chips(); render(); return; }
   const n=e.target.closest("[data-n]"); if(n){ const v=n.dataset.n; if(fNat.has(v)&&fNat.size>1) fNat.delete(v); else fNat.add(v); limite=60; chips(); render(); return; }
-  const r=e.target.closest(".revelar button"); if(r){ r.closest(".lc").classList.remove("oculto"); return; }
+  const v=e.target.closest(".vista"); if(v){ const id=+v.closest(".lc").dataset.id; if(vistas.has(id)) vistas.delete(id); else vistas.add(id); salvar(); render(); return; }
 });
 document.getElementById("cap").onchange = e => { fCap=e.target.value; limite=60; render(); };
 document.getElementById("busca").oninput = () => { limite=60; render(); };
 document.getElementById("mais").onclick = () => { limite+=60; render(); };
-
+document.getElementById("verVistas").onclick = e => { mostrarVistas=!mostrarVistas; e.target.classList.toggle("on",mostrarVistas); e.target.textContent = mostrarVistas ? "Esconder as vistas" : "Mostrar as vistas"; limite=60; render(); };
 chips(); render();
 </script>
 </body>
