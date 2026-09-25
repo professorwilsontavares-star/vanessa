@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz da Vanessa: Direito Tributário, meus erros</title>
+<style>
+  :root{--navy:#1E2B38; --q:#6d28d9; --q-cl:#f1ecfd; --laranja:#FFE4CC; --coral:#E25E42; --ok:#2e7d4f; --ok-cl:#d7f0df; --no:#c0392b; --no-cl:#fbe0dc; --cinza:#64748b;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif; background:linear-gradient(160deg,#f1ecfd,#ddd0fa); color:var(--navy); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:70px 20px 20px; line-height:1.55;}
+  .app{width:100%; max-width:640px; background:#fff; border-radius:24px; box-shadow:0 12px 40px rgba(109,40,217,.16); overflow:hidden;}
+  header{background:linear-gradient(135deg,#6d28d9,#4c1d95); color:#fff; padding:22px 26px 18px;}
+  header .selo{font-size:.72rem; letter-spacing:1.5px; text-transform:uppercase; opacity:.8; font-weight:700;}
+  header h1{font-size:1.35rem; margin-top:4px;}
+  .barra-topo{display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-size:.9rem; font-weight:700;}
+  .progresso{height:9px; background:rgba(255,255,255,.25); border-radius:20px; margin-top:10px; overflow:hidden;}
+  .progresso span{display:block; height:100%; width:0; background:var(--coral); border-radius:20px; transition:width .35s ease;}
+  main{padding:26px 26px 30px;}
+  .pergunta{font-size:1.2rem; font-weight:800; color:var(--navy); margin-bottom:20px; min-height:60px;}
+  .alternativas{display:flex; flex-direction:column; gap:12px;}
+  .alt{text-align:left; font-size:1.02rem; padding:15px 18px; border:2px solid #ddd0fa; background:#f8f5fe; border-radius:14px; cursor:pointer; transition:all .15s ease; display:flex; align-items:center; gap:12px; font-family:inherit; color:var(--navy);}
+  .alt:hover:not(:disabled){border-color:var(--q); background:var(--q-cl); transform:translateY(-1px);}
+  .alt:disabled{cursor:default;}
+  .alt .letra{flex:0 0 30px; height:30px; border-radius:50%; background:var(--q); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.95rem;}
+  .alt.certo{border-color:var(--ok); background:var(--ok-cl);} .alt.certo .letra{background:var(--ok);}
+  .alt.errado{border-color:var(--no); background:var(--no-cl);} .alt.errado .letra{background:var(--no);}
+  .feedback{margin-top:20px; padding:15px 18px; border-radius:14px; display:none; font-size:1rem;}
+  .feedback.mostrar{display:block;}
+  .feedback.ok{background:var(--ok-cl);}
+  .feedback.no{background:var(--no-cl);}
+  .feedback b:first-child{display:block; margin-bottom:3px;}
+  .proxima{margin-top:20px; width:100%; padding:15px; font-size:1.1rem; font-weight:800; background:var(--coral); color:#fff; border:none; border-radius:14px; cursor:pointer; font-family:inherit; display:none;}
+  .proxima.mostrar{display:block;} .proxima:hover{filter:brightness(1.08);}
+  .final{text-align:center; padding:14px 6px;}
+  .final .emoji{font-size:3.4rem;} .final h2{font-size:1.6rem; margin:10px 0;}
+  .final .placar{font-size:1.15rem; color:var(--cinza); margin-bottom:6px;}
+  .final .nota{font-size:3rem; font-weight:900; color:var(--q); margin:6px 0;}
+  .final .recado{background:var(--laranja); border-radius:14px; padding:14px 18px; margin:18px 0; color:var(--navy);}
+  .refazer{padding:14px 28px; font-size:1.05rem; font-weight:800; background:var(--q); color:#fff; border:none; border-radius:14px; cursor:pointer; font-family:inherit;}
+</style>
+</head>
+<body>
+<a href="index.html" class="btn-voltar-hub" style="position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:9999;display:inline-flex;align-items:center;gap:7px;background:#E25E42;color:#fff;text-decoration:none;font-weight:800;font-size:1rem;padding:11px 18px;border-radius:30px;box-shadow:0 4px 14px rgba(0,0,0,.3);font-family:'Segoe UI',system-ui,Arial,sans-serif;">← Voltar</a>
+<div class="app">
+  <header>
+    <div class="selo">Direito Tributário · Meus erros · Quiz</div>
+    <h1>Taxas, imunidades e crédito tributário ⚖️</h1>
+    <div class="barra-topo"><span id="contador">Questão 1</span><span id="placar">Acertos: 0</span></div>
+    <div class="progresso"><span id="barra"></span></div>
+  </header>
+  <main id="palco">
+    <div class="pergunta" id="pergunta"></div>
+    <div class="alternativas" id="alternativas"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="proxima" id="proxima">Próxima ➜</button>
+  </main>
+</div>
+<script>
+const questoes = [
+// bem fáceis
+  { q:"Isenção é concedida por...", alt:["lei","Constituição","decreto"], c:0,
+    e:"Isenção vem de lei. Imunidade vem da Constituição." },
+  { q:"Segurança pública pode ser custeada por...", alt:["impostos","taxa","contribuição de melhoria"], c:0,
+    e:"Não é serviço divisível, então não cabe taxa (STF, Tema 16)." },
+  { q:"Para cobrar taxa de serviço, ele precisa ser...", alt:["específico e divisível","geral e indivisível","prestado por concessionária"], c:0,
+    e:"Serviço específico e divisível, prestado ou posto à disposição." },
+  { q:"Custas e emolumentos de cartório têm natureza de...", alt:["taxa","tarifa","preço público"], c:0,
+    e:"São taxas, mesmo com o serviço delegado ao cartório." },
+  { q:"O tributo é cobrado mediante atividade...", alt:["administrativa plenamente vinculada","legislativa","administrativa discricionária"], c:0,
+    e:"CTN, art. 3º. A FCC troca “administrativa” por “legislativa”." },
+  { q:"Anistia pode ser concedida por...", alt:["lei","decreto do governador","portaria do secretário"], c:0,
+    e:"Exclusão do crédito exige lei. “Decretar” anistia não vale." },
+  { q:"A decadência extingue...", alt:["o direito de lançar","o crédito já constituído","a obrigação acessória"], c:0,
+    e:"Por isso a doutrina chama de extinção imprópria." },
+  { q:"O prazo para pedir restituição de tributo pago indevidamente conta de...", alt:["5 anos da extinção do crédito","5 anos do fato gerador","2 anos do pagamento"], c:0,
+    e:"Art. 168, I: da extinção do crédito, ou seja, do pagamento. 2 anos é para anular a decisão que negou a restituição." },
+  { q:"Imunidade das entidades de educação é...", alt:["subjetiva","objetiva","condicionada à lei ordinária"], c:0,
+    e:"Protege o sujeito. Objetiva é a de livros e fonogramas." },
+  { q:"As imunidades do art. 150, VI, da CF alcançam...", alt:["só impostos","todos os tributos","impostos e taxas"], c:0,
+    e:"Contribuições têm regra própria (art. 195, § 7º)." },
+
+  // taxas
+  { q:"Serviço de uso compulsório posto à disposição do contribuinte, mesmo sem uso, é utilização...", alt:["potencial","efetiva","facultativa"], c:0,
+    e:"Efetiva é quando o contribuinte usufrui. A FCC troca as duas palavras." },
+  { q:"Sobre taxa e base de cálculo de imposto, o STF entende que...", alt:["pode usar elementos da base de um imposto, sem identidade integral","nunca pode usar elemento de imposto","pode ter base idêntica à de imposto"], c:0,
+    e:"Súmula Vinculante 29." },
+  { q:"Taxa de coleta de lixo calculada pela metragem da frente do imóvel é inválida porque...", alt:["a base não tem pertinência com o serviço","taxa de lixo é inconstitucional","usa o valor venal do imóvel"], c:0,
+    e:"A taxa de lixo é válida (SV 19). O problema é a base sem relação com o custo." },
+  { q:"Estado pode cobrar taxa de fiscalização da mineração calculada por tonelada extraída?", alt:["Sim, fiscalizar é competência comum","Não, só a União pode","Não, minério não é fato gerador de taxa"], c:0,
+    e:"Legislar sobre minas é da União; fiscalizar é comum (ADI 4.786)." },
+  { q:"Taxa é tributo...", alt:["vinculado, de competência comum","não vinculado, de competência privativa","vinculado, só da União"], c:0,
+    e:"Vinculado a uma atividade estatal; qualquer ente cobra no âmbito das suas atribuições." },
+
+  // conceito
+  { q:"A natureza jurídica do tributo é determinada...", alt:["pelo fato gerador, e só por ele","pelo fato gerador e pela destinação","pela denominação dada em lei"], c:0,
+    e:"Art. 4º do CTN. A FCC insere “dentre outras formas” para enganar." },
+  { q:"A irrelevância da denominação serve para...", alt:["impedir tributos disfarçados com outro nome","permitir que o ente escolha a espécie","classificar tributos pela destinação"], c:0,
+    e:"Art. 4º, I, do CTN." },
+
+  // imunidades
+  { q:"Entidade fechada de previdência privada é imune quando...", alt:["não há contribuição dos beneficiários","tem fins lucrativos","aplica tudo no exterior"], c:0,
+    e:"Súmula 730 do STF. E é imune, não isenta." },
+  { q:"Imóvel de particular alugado a templo religioso...", alt:["não paga IPTU (EC 116/2022)","paga IPTU normalmente","paga IPTU com redução de 50%"], c:0,
+    e:"Art. 156, § 1º-A. Se o locatário for o Estado, o dono particular paga." },
+
+  // anterioridade
+  { q:"Taxa instituída por medida provisória pode ser cobrada...", alt:["respeitadas as anterioridades a partir da publicação da MP","só no ano seguinte à conversão em lei","imediatamente"], c:0,
+    e:"A regra da conversão até o fim do ano (art. 62, § 2º) é só para impostos." },
+  { q:"Lei que aumenta a base de 100 para 110 e reduz a alíquota de 5% para 4% pode ser cobrada...", alt:["desde a publicação","só no exercício seguinte","após 90 dias"], c:0,
+    e:"100 × 5% = 5,00; 110 × 4% = 4,40. A carga caiu: redução não espera anterioridade." },
+
+  // exclusão, extinção, restituição, decadência
+  { q:"Lei que perdoa tributo de fato gerador já ocorrido e não pago é...", alt:["remissão","isenção","anistia"], c:0,
+    e:"Isenção é para fato gerador posterior. Anistia perdoa infração, não tributo." },
+  { q:"A extinção do crédito tributário...", alt:["não impede novo lançamento se o anterior foi anulado por vício formal","impede qualquer novo lançamento","impede a restituição"], c:0,
+    e:"Art. 173, II, do CTN." },
+  { q:"A transação tributária...", alt:["depende de lei e pressupõe litígio","pode ser feita pelo fiscal sem lei","extingue o crédito antes do litígio"], c:0,
+    e:"Art. 171 do CTN." },
+  { q:"O pedido administrativo de restituição...", alt:["não interrompe a prescrição da ação de repetição","interrompe a prescrição","suspende a prescrição por 2 anos"], c:0,
+    e:"Súmula 625 do STJ." },
+  { q:"Negado o pedido de restituição, o prazo da ação anulatória é de...", alt:["2 anos","5 anos","1 ano"], c:0,
+    e:"Art. 169 do CTN." },
+  { q:"Fiscalização iniciada em maio de 2016 sobre fato gerador de 2016: a decadência começa...", alt:["na data da medida preparatória","em 1º de janeiro de 2017","no fato gerador"], c:0,
+    e:"Art. 173, parágrafo único: a medida preparatória antecipa o início. Nunca adia." },
+  { q:"Na restituição, a regra “5 anos do fato gerador, salvo dolo” é de outro instituto. Qual?", alt:["decadência no lançamento por homologação","prescrição da cobrança","transação"], c:0,
+    e:"É o art. 150, § 4º. A FCC transplanta prazos entre institutos." },
+
+  // ICMS
+  { q:"Preço sem ICMS de 2,5556 e alíquota de 12% por dentro. O preço com ICMS é...", alt:["2,9041","2,8622","3,0156"], c:0,
+    e:"2,5556 ÷ 0,88 = 2,9041. Multiplicar por 1,12 é cálculo por fora." }
+];
+function embaralhar(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function preparar(){ const faceis=questoes.slice(0,10), resto=questoes.slice(10); return embaralhar(faceis.slice()).concat(embaralhar(resto.slice())).map(q=>{ const alts=q.alt.map((t,i)=>({t,c:i===q.c})); embaralhar(alts); return {q:q.q, alt:alts.map(a=>a.t), c:alts.findIndex(a=>a.c), e:q.e}; }); }
+let jogo = preparar(); let atual=0, acertos=0; const letras=["A","B","C"]; const $=id=>document.getElementById(id);
+function render(){ const it=jogo[atual]; $("contador").textContent=`Questão ${atual+1} de ${jogo.length}`; $("placar").textContent=`Acertos: ${acertos}`; $("barra").style.width=`${(atual/jogo.length)*100}%`; $("pergunta").textContent=it.q; const b=$("alternativas"); b.innerHTML=""; it.alt.forEach((t,i)=>{ const x=document.createElement("button"); x.className="alt"; x.innerHTML=`<span class="letra">${letras[i]}</span><span>${t}</span>`; x.onclick=()=>responder(i); b.appendChild(x); }); const f=$("feedback"); f.className="feedback"; f.innerHTML=""; $("proxima").className="proxima"; $("proxima").textContent=atual===jogo.length-1?"Ver resultado 🏁":"Próxima ➜"; }
+function responder(e){ const it=jogo[atual]; document.querySelectorAll(".alt").forEach((b,i)=>{ b.disabled=true; if(i===it.c)b.classList.add("certo"); if(i===e&&e!==it.c)b.classList.add("errado"); }); const f=$("feedback"); if(e===it.c){acertos++; f.className="feedback ok mostrar"; f.innerHTML=`<b>✅ Acertou!</b>${it.e}`;} else {f.className="feedback no mostrar"; f.innerHTML=`<b>❌ Quase!</b> A resposta certa é <b>${letras[it.c]}</b>. ${it.e}`;} $("placar").textContent=`Acertos: ${acertos}`; $("proxima").classList.add("mostrar"); }
+$("proxima").onclick=()=>{ atual++; if(atual<jogo.length)render(); else final(); };
+function final(){ const t=jogo.length; const nota=Math.round((acertos/t)*100)/10; const p=acertos/t; let e,m; if(p>=0.9){e="🏆";m="Excelente! Esse bloco está firme. Refaça daqui a 7 dias para não esquecer.";} else if(p>=0.7){e="😃";m="Muito bom! Revise os cartões dos que errou e refaça amanhã.";} else if(p>=0.45){e="🙂";m="Bom começo. Leia os cartões e refaça amanhã.";} else {e="💪";m="Sem problema. Leia os cartões com calma e tente de novo.";} $("barra").style.width="100%"; $("contador").textContent="Fim do quiz"; $("palco").innerHTML=`<div class="final"><div class="emoji">${e}</div><h2>Quiz concluído!</h2><div class="placar">Você acertou <b>${acertos}</b> de <b>${t}</b></div><div class="nota">Nota ${nota}</div><div class="recado">${m}</div><button class="refazer" onclick="reiniciar()">🔀 Embaralhar e refazer</button></div>`; }
+function reiniciar(){ atual=0; acertos=0; jogo=preparar(); $("palco").innerHTML=`<div class="pergunta" id="pergunta"></div><div class="alternativas" id="alternativas"></div><div class="feedback" id="feedback"></div><button class="proxima" id="proxima">Próxima ➜</button>`; $("proxima").onclick=()=>{ atual++; if(atual<jogo.length)render(); else final(); }; render(); }
+render();
+</script>
+</body>
+</html>

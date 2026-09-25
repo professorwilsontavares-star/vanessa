@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revisão da Vanessa: Direito Tributário, meus erros</title>
+<style>
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Segoe UI",system-ui,Arial,sans-serif; background:linear-gradient(160deg,#f1ecfd,#ddd0fa); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:70px 16px 24px; color:#1E2B38;}
+  .box{width:100%; max-width:560px; text-align:center;}
+  h1{font-size:1.3rem; color:#6d28d9; margin-bottom:4px;}
+  .sub{color:#64748b; font-size:.9rem; margin-bottom:16px;}
+  .contador{font-weight:700; color:#64748b; margin-bottom:10px;}
+  .tema{display:inline-block; font-size:.78rem; font-weight:700; color:#6d28d9; background:#fff; border:1px solid #6d28d9; border-radius:999px; padding:2px 10px; margin-bottom:10px;}
+  .tema.facil{color:#fff; background:#2e7d4f; border-color:#2e7d4f;}
+  .cartao{background:#fff; border-radius:22px; box-shadow:0 12px 34px rgba(30,43,56,.16); padding:30px 24px; min-height:260px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px;}
+  .rotulo{font-size:.75rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:800;}
+  .rotulo.p{color:#E25E42;} .rotulo.r{color:#6d28d9;}
+  .pergunta{font-size:1.25rem; font-weight:800; line-height:1.4;}
+  .resposta{font-size:1.08rem; line-height:1.55; color:#1E2B38; border-top:2px dashed #e2e8f0; padding-top:14px; width:100%;}
+  .fonte{display:block; margin-top:8px; font-size:.82rem; color:#64748b;}
+  .bts{display:flex; gap:10px; margin-top:16px; justify-content:center; flex-wrap:wrap;}
+  button{font-family:inherit; font-size:1rem; font-weight:800; border:none; cursor:pointer; padding:13px 20px; border-radius:14px; transition:filter .15s;}
+  button:hover{filter:brightness(1.08);}
+  .prox{background:#E25E42; color:#fff;} .ant{background:#e2e8f0; color:#1E2B38;} .emb{background:#fff; color:#1E2B38; border:2px solid #cbd5e1;}
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:9999;display:inline-flex;align-items:center;gap:7px;background:#E25E42;color:#fff;text-decoration:none;font-weight:800;font-size:1rem;padding:11px 18px;border-radius:30px;box-shadow:0 4px 14px rgba(0,0,0,.3);font-family:'Segoe UI',system-ui,Arial,sans-serif;">&larr; Voltar</a>
+<div class="box">
+  <h1>Direito Tributário: meus erros em cartões</h1>
+  <div class="sub">Tudo aqui eu já errei em questão FCC. Leia a pergunta, responda de cabeça, confira logo abaixo.</div>
+  <div class="contador" id="contador"></div>
+  <div class="tema" id="tema"></div>
+  <div class="cartao">
+    <div><div class="rotulo p">Pergunta</div><div class="pergunta" id="pergunta"></div></div>
+    <div class="resposta" id="resposta"></div>
+  </div>
+  <div class="bts">
+    <button class="ant" id="ant">&larr; Anterior</button>
+    <button class="prox" id="prox">Próximo &rarr;</button>
+  </div>
+  <div class="bts"><button class="emb" id="emb">Embaralhar e recomeçar</button></div>
+</div>
+<script>
+const cartoes = [
+["Bem fácil","Isenção vem de onde? E imunidade?","Isenção vem de lei.<br>Imunidade vem da Constituição.","Errei marcando “isenta” no lugar de “imune”"],
+["Bem fácil","Segurança pública pode ser custeada por taxa?","Não. Não é serviço divisível: se custeia com impostos.","STF, Tema 16"],
+["Bem fácil","Quais os dois requisitos do serviço que permite cobrar taxa?","Específico e divisível.","CTN, art. 77 e 79"],
+["Bem fácil","Custas e emolumentos de cartório são o quê?","Taxa. Obedecem à reserva legal e às anterioridades.","STF"],
+["Bem fácil","Quem cobra o tributo: atividade administrativa ou legislativa?","Administrativa, plenamente vinculada.<br>O Legislativo institui; não cobra.","CTN, art. 3º"],
+["Bem fácil","Isenção e anistia podem ser concedidas por decreto?","Não. Exigem lei.","CTN, art. 97, VI; CF, art. 150, § 6º"],
+["Bem fácil","Decadência extingue o quê?","O direito de lançar. O crédito nem chegou a ser constituído: é extinção imprópria.","CTN, art. 156, V"],
+["Bem fácil","Prazo para pedir restituição de tributo pago a mais?","5 anos da extinção do crédito, ou seja, do pagamento.<br>Não é do fato gerador.","CTN, art. 168, I"],
+["Taxas","Utilização potencial x efetiva do serviço?","Potencial: serviço compulsório posto à disposição.<br>Efetiva: quando o contribuinte usufrui.","CTN, art. 79, I. Errei com a troca das palavras"],
+["Taxas","Taxa pode usar elemento da base de cálculo de um imposto?","Pode, desde que não haja identidade integral entre as bases.","Súmula Vinculante 29"],
+["Taxas","Taxa de lixo calculada pela metragem da frente do imóvel vale?","Não. A base não guarda relação com o custo do serviço.","TJ SC, FCC 2017"],
+["Taxas","Estado pode cobrar taxa de fiscalização mineral pela tonelada extraída?","Pode. Fiscalizar é competência comum e a tonelada mede a atividade fiscalizada.","ADI 4.786"],
+["Taxas","Taxa é tributo vinculado ou não vinculado? Competência de quem?","Vinculado a uma atividade do Estado.<br>Competência comum: União, Estados, DF e Municípios.","CTN, art. 77"],
+["Conceito","O que determina a natureza jurídica do tributo?","O fato gerador, e só ele.<br>Nome e destinação da arrecadação são irrelevantes.","CTN, art. 4º"],
+["Conceito","Para que serve a irrelevância da denominação?","Impede que o legislador disfarce um tributo com outro nome.","CTN, art. 4º, I"],
+["Imunidades","Imunidade das entidades de educação é subjetiva ou objetiva?","Subjetiva: protege o sujeito.<br>Objetiva protege o objeto (livros, fonogramas).","Doutrina"],
+["Imunidades","Previdência privada fechada é imune quando?","Só se não houver contribuição dos beneficiários.","Súmula 730 do STF"],
+["Imunidades","Templo que só aluga o imóvel paga IPTU?","Não. A EC 116/2022 estendeu ao templo locatário.<br>Estado locatário não tem essa regra.","CF, art. 156, § 1º-A"],
+["Imunidades","As imunidades do art. 150, VI, alcançam quais tributos?","Só impostos.","CF, art. 150, VI"],
+["Anterioridade","Taxa instituída por medida provisória: a regra do art. 62, § 2º, vale?","Não. Ela vale só para impostos.<br>Para taxa, contam as anterioridades a partir da publicação da MP.","CF, art. 62, § 2º"],
+["Anterioridade","Lei que reduz a carga líquida precisa esperar anterioridade?","Não. Vale desde a publicação.<br>Faça a conta: base maior com alíquota menor pode reduzir.","CF, art. 150, III"],
+["Exclusão","Isenção alcança fato gerador já ocorrido e não pago?","Não. Isenção alcança fato gerador posterior à lei.<br>Perdoar o que já é devido é remissão.","CTN, art. 175 e 178"],
+["Extinção","A extinção do crédito impede novo lançamento?","Não. Lançamento anulado por vício formal permite novo lançamento.","CTN, art. 173, II"],
+["Extinção","Quais os requisitos da transação?","Depende de lei e pressupõe litígio.","CTN, art. 171"],
+["Restituição","O pedido administrativo de restituição interrompe a prescrição?","Não.","Súmula 625 do STJ"],
+["Decadência","O que antecipa o início da decadência?","A medida preparatória indispensável ao lançamento notificada ao sujeito passivo.<br>Só antecipa, nunca adia.","CTN, art. 173, parágrafo único"],
+["ICMS","Como se calcula o preço com ICMS por dentro?","Preço sem ICMS dividido por (1 menos a alíquota).<br>Ex.: 2,5556 ÷ 0,88 = 2,9041.","ICMS integra a própria base"]
+];
+let ordem = cartoes.map((_,i)=>i), pos = 0;
+const $ = id => document.getElementById(id);
+function mostra(){
+  const c = cartoes[ordem[pos]];
+  $("contador").textContent = `Cartão ${pos+1} de ${cartoes.length}`;
+  $("tema").textContent = c[0];
+  $("tema").className = "tema" + (c[0]==="Bem fácil" ? " facil" : "");
+  $("pergunta").innerHTML = c[1];
+  $("resposta").innerHTML = `<div class="rotulo r">Resposta</div>${c[2]}<span class="fonte">${c[3]}</span>`;
+}
+$("prox").onclick = () => { pos = (pos+1) % cartoes.length; mostra(); };
+$("ant").onclick = () => { pos = (pos-1+cartoes.length) % cartoes.length; mostra(); };
+$("emb").onclick = () => { for(let i=ordem.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [ordem[i],ordem[j]]=[ordem[j],ordem[i]];} pos=0; mostra(); };
+document.addEventListener("keydown", e => { if(e.key==="ArrowRight") $("prox").click(); else if(e.key==="ArrowLeft") $("ant").click(); });
+mostra();
+</script>
+</body>
+</html>
