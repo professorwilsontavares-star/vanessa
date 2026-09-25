@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Questões FCC: CASP SEFAZ-SC</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--text:#1d2330;--muted:#5d6675;--line:#dfe3ea;--accent:#1f4e9c;--accent-soft:#e8eefa;--ok:#1d7a46;--ok-soft:#e3f4ea;--bad:#b3261e;--bad-soft:#fbe7e5;--note:#fff6dc;--note-line:#e8c35a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151b;--card:#1b2029;--text:#e6e9ef;--muted:#9aa3b2;--line:#2c3340;--accent:#7fa6ea;--accent-soft:#1f2a3d;--ok:#5fcf8f;--ok-soft:#173226;--bad:#f08a82;--bad-soft:#3a1d1b;--note:#2d2716;--note-line:#8a7430}}
+:root[data-theme="dark"]{--bg:#12151b;--card:#1b2029;--text:#e6e9ef;--muted:#9aa3b2;--line:#2c3340;--accent:#7fa6ea;--accent-soft:#1f2a3d;--ok:#5fcf8f;--ok-soft:#173226;--bad:#f08a82;--bad-soft:#3a1d1b;--note:#2d2716;--note-line:#8a7430}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 "Segoe UI",system-ui,-apple-system,sans-serif}
+.wrap{max-width:840px;margin:0 auto;padding:20px 16px 80px}
+header h1{font-size:1.45rem;margin:0 0 4px}
+header p{margin:0;color:var(--muted);font-size:.93rem}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0;margin:14px 0 6px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.score{font-weight:600;margin-right:auto}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;padding:5px 12px;font-size:.85rem;cursor:pointer}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 18px 14px;margin:16px 0}
+.qh{display:flex;gap:10px;align-items:baseline;margin-bottom:8px;flex-wrap:wrap}
+.num{font-weight:700;color:var(--accent)}
+.tag{font-size:.78rem;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 8px}
+.en{margin:0 0 12px}
+.alt{display:flex;gap:10px;width:100%;text-align:left;background:transparent;border:1px solid var(--line);border-radius:9px;padding:9px 12px;margin:7px 0;color:var(--text);font:inherit;cursor:pointer}
+.alt:hover:not([disabled]){background:var(--accent-soft)}
+.alt b{min-width:1.4em}
+.alt[disabled]{cursor:default}
+.alt.certa{background:var(--ok-soft);border-color:var(--ok)}
+.alt.errada{background:var(--bad-soft);border-color:var(--bad)}
+.res{display:none;margin-top:12px;border-top:1px dashed var(--line);padding-top:12px}
+.res.show{display:block}
+.veredito{font-weight:700;margin-bottom:6px}
+.veredito.ok{color:var(--ok)}.veredito.no{color:var(--bad)}
+.rev{margin-top:10px;background:var(--note);border-left:4px solid var(--note-line);padding:8px 12px;border-radius:6px;font-size:.9rem}
+.rev code{font-family:Consolas,monospace;background:transparent;font-weight:600}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+button.main{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:9px 16px;font:inherit;cursor:pointer}
+button.sec{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px 16px;font:inherit;cursor:pointer}
+.theme{margin-left:4px}
+.voltar{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:50;background:#1d4e89;color:#fff;text-decoration:none;font-weight:600;border-radius:999px;padding:8px 20px;box-shadow:0 4px 14px rgba(0,0,0,.18);font-family:"Segoe UI",system-ui,sans-serif}.voltar:hover{background:#163e6d} .wrap{padding-top:58px} .bar{top:0} .rev a{color:var(--accent);font-weight:600}</style>
+</head>
+<body>
+<a class="voltar" href="index.html">&larr; Voltar</a><div class="wrap">
+<header>
+<h1>Questões FCC: Portarias 710 e 163, Siconfi e RPPS</h1>
+<p>SEFAZ-SC 2026 · Auditor Estadual de Finanças Públicas (Ciências Contábeis) · 26 questões inéditas no padrão FCC (A-E). Clique numa alternativa para ver o gabarito comentado e onde revisar no resumo.</p>
+</header>
+<div class="bar">
+<span class="score" id="score">0 de 26 respondidas</span>
+<span id="filtros"></span>
+<button class="chip theme" id="themeBtn" title="Alternar tema claro/escuro">◐</button>
+</div>
+<div id="lista"></div>
+<div class="actions">
+<button class="main" id="mostrar">Mostrar todos os gabaritos</button>
+<button class="sec" id="refazer">Refazer do zero</button>
+</div>
+</div>
+<script>
+const QUESTOES = [
+{t:"Portaria 163/2001", e:"De acordo com a Portaria Interministerial (Conjunta) STN/SOF nº 163/2001, a modalidade de aplicação",
+ a:["identifica os objetos de gasto, tais como vencimentos, juros, diárias e material de consumo.",
+    "corresponde à agregação de elementos de despesa que apresentam as mesmas características quanto ao objeto de gasto.",
+    "é informação gerencial que complementa a natureza da despesa e objetiva, precipuamente, possibilitar a eliminação da dupla contagem dos recursos transferidos ou descentralizados.",
+    "constitui desdobramento facultativo do elemento de despesa, a critério de cada ente.",
+    "indica se a despesa contribui diretamente para a formação ou aquisição de um bem de capital."],
+ c:2, k:"possibilitar a eliminação da dupla contagem",
+ x:"Literal do art. 3º, § 1º. (A) é o conceito de elemento (§ 3º). (B) é o conceito de grupo de natureza (§ 2º). (D) o desdobramento facultativo é o \"dd\" do elemento (art. 5º). (E) é o critério da categoria econômica (despesa de capital)."},
+
+{t:"Portaria 163/2001", e:"Na lei orçamentária, segundo a Portaria Interministerial STN/SOF nº 163/2001, a discriminação da despesa quanto à sua natureza far-se-á, no mínimo, por",
+ a:["categoria econômica, grupo de natureza de despesa e modalidade de aplicação.",
+    "categoria econômica, grupo de natureza de despesa e elemento de despesa.",
+    "categoria econômica e elemento de despesa.",
+    "grupo de natureza de despesa, modalidade de aplicação, elemento e desdobramento.",
+    "categoria econômica, modalidade de aplicação e elemento de despesa."],
+ c:0, k:"Pegadinha FCC clássica",
+ x:"Art. 6º da Portaria 163. O elemento aparece na execução (empenho), não é exigido na LOA. Atenção: a Lei 4.320 (art. 15) fala em \"no mínimo por elementos\"; quando a questão citar a Portaria 163, vale o art. 6º."},
+
+{t:"Portaria 163/2001", e:"No orçamento de um Estado, foi empenhada despesa com a classificação por natureza 3.3.91.97. Essa classificação indica",
+ a:["despesa corrente do grupo Pessoal e Encargos Sociais, transferida a Municípios, relativa a contribuição patronal suplementar ao RPPS.",
+    "despesa de capital, do grupo Inversões Financeiras, aplicada diretamente, relativa a aporte de capital em empresa estatal.",
+    "despesa corrente do grupo Outras Despesas Correntes, em aplicação direta decorrente de operação entre órgãos, fundos e entidades integrantes dos orçamentos fiscal e da seguridade social, relativa a aporte para cobertura do déficit atuarial do RPPS.",
+    "despesa corrente do grupo Outras Despesas Correntes, transferida a instituição privada sem fins lucrativos, relativa a despesas de exercícios anteriores.",
+    "transferência financeira ao RPPS para cobertura de insuficiência financeira, sem execução orçamentária."],
+ c:2, k:"Aporte para Cobertura do Déficit Atuarial do RPPS",
+ x:"3 = despesa corrente; 3 = Outras Despesas Correntes; 91 = aplicação direta decorrente de operação entre órgãos do OFSS (intraorçamentária); 97 = Aporte para Cobertura do Déficit Atuarial do RPPS. (A) a contribuição suplementar é 3.1.91.13. (E) a cobertura de insuficiência financeira não gera despesa orçamentária, logo não teria natureza de despesa."},
+
+{t:"Portaria 163/2001", e:"Sobre o código de natureza da receita orçamentária previsto na Portaria Interministerial STN/SOF nº 163/2001, considere:<br>I. As receitas intraorçamentárias substituem a categoria econômica 1 pelo dígito 7 e a categoria 2 pelo dígito 8.<br>II. O dígito \"tipo\" igual a 0 pode ser utilizado na apropriação da receita quando não houver multas ou juros.<br>III. No desdobramento \"ee\", os códigos de 50 a 98 são de uso exclusivo dos Estados, do Distrito Federal e dos Municípios.<br>IV. Multas e juros incidentes sobre receitas de capital classificam-se como receitas de capital, na mesma origem da receita principal.<br>Está correto o que se afirma APENAS em",
+ a:["I e II.","II e IV.","I, III e IV.","I e III.","III e IV."],
+ c:3, k:"exclusivos de Estados, DF e Municípios",
+ x:"I: correto (art. 2º, § 13). II: errado, é vedado usar o tipo 0 na apropriação (§ 14); ele é só agregador. III: correto (§ 4º; 00 a 49 são da União, 99 = outras). IV: errado, multas e juros de receitas de capital vão para 1.9.4, receita corrente (§ 7º)."},
+
+{t:"Portaria 163/2001", e:"Em relação à Reserva de Contingência na classificação da despesa, é correto afirmar que",
+ a:["integra o grupo de natureza de despesa 9, vigente no Anexo II da Portaria nº 163/2001.",
+    "é classificada na modalidade 90, Aplicações Diretas, por ser executada pelo próprio ente.",
+    "é identificada, quanto à natureza da despesa, pelo código 9.9.99.99.99, sendo a modalidade 99 (A Definir) de execução vedada.",
+    "pode ser executada diretamente no elemento 99, A Classificar, até a abertura do crédito adicional.",
+    "é classificada como Outras Despesas Correntes, modalidade 91, por envolver operação entre órgãos do mesmo orçamento."],
+ c:2, k:"Natureza da despesa de ambas",
+ x:"Art. 8º, parágrafo único: Reserva de Contingência e Reserva do RPPS usam 9.9.99.99.99. A modalidade 99 é de uso do Legislativo ou das reservas, vedada a execução. (A) os grupos 7 e 9 foram excluídos do Anexo II; hoje vão de 1 a 6. (D) o elemento 99 também é vedado na execução. A reserva é utilizada como fonte para créditos adicionais, não é executada."},
+
+{t:"Portaria STN 710/2021", e:"Nos termos da Portaria Conjunta STN/SOF nº 20/2021 e da Portaria STN nº 710/2021, a classificação por fontes ou destinações de recursos",
+ a:["é composta de 4 dígitos padronizados, dos quais o primeiro identifica o exercício de arrecadação, aplicáveis igualmente à União, aos Estados e aos Municípios.",
+    "permite aos Estados, DF e Municípios criar livremente novas fontes, desde que as comuniquem à STN por meio da MSC.",
+    "utiliza, para Estados, DF e Municípios, códigos de 3 dígitos na faixa de 500 a 999, podendo o ente estabelecer detalhamentos adicionais aos códigos padronizados, sem necessidade de envio desses detalhamentos à STN.",
+    "passou a ser de observância obrigatória a partir do exercício de 2025, sendo facultativa até então.",
+    "corresponde ao agrupamento de despesas que possuem o mesmo objeto de gasto."],
+ c:2, k:"Criar fonte nova",
+ x:"PC 20/2021: código de 3 dígitos; União 000 a 499 (SOF); entes subnacionais 500 a 999 (STN); o ente pode detalhar sem enviar à STN (art. 2º, § 3º). (A) o 1º dígito de exercício só aparece na MSC e não integra o código padronizado. (B) criar fonte é exclusivo da STN. (D) obrigatória desde 2023. (E) fonte é agrupamento de RECEITAS com as mesmas normas de aplicação na despesa."},
+
+{t:"Portaria STN 710/2021", e:"Na Matriz de Saldos Contábeis de um Município, determinado saldo de disponibilidade está associado à informação complementar de fonte de recursos \"2.540\". Essa informação indica recursos",
+ a:["de Transferências do FUNDEB (Impostos e Transferências de Impostos) arrecadados em exercícios anteriores.",
+    "de Transferências do FUNDEB (Impostos e Transferências de Impostos) do exercício corrente.",
+    "do SUS provenientes da União, bloco de manutenção, condicionados à aprovação legislativa.",
+    "não vinculados de impostos do exercício corrente, com código de acompanhamento 540.",
+    "de Transferências do FUNDEB relativos à complementação da União (VAAT), de exercícios anteriores."],
+ c:0, k:"Recursos de Exercícios Anteriores",
+ x:"Na MSC a FR tem 4 dígitos: o 1º identifica o exercício (1 = corrente, 2 = exercícios anteriores, 9 = condicionados) e os 3 seguintes são a fonte padronizada. 540 = Transferências do FUNDEB, Impostos e Transferências de Impostos. VAAT é 542."},
+
+{t:"Portaria STN 710/2021", e:"Um Estado promoveu a segregação da massa de segurados de seu RPPS. De acordo com a classificação padronizada da Portaria STN nº 710/2021, os recursos devem ser identificados nas fontes",
+ a:["800 para o Fundo em Repartição, 801 para o Fundo em Capitalização e 802 para a taxa de administração.",
+    "800 para o Fundo em Capitalização (Plano Previdenciário), 801 para o Fundo em Repartição (Plano Financeiro) e 802 para a taxa de administração.",
+    "869 para ambos os fundos, por se tratar de recursos extraorçamentários vinculados.",
+    "500 para o Fundo em Repartição, por ser coberto com recursos livres do Tesouro, e 800 para o Fundo em Capitalização.",
+    "801 para ambos os fundos, sendo a separação feita apenas por código de acompanhamento (CO)."],
+ c:1, k:"Fundo em Repartição (Plano Financeiro)",
+ x:"Anexo I da Portaria 710: 800 RPPS, Fundo em Capitalização (Plano Previdenciário); 801 RPPS, Fundo em Repartição (Plano Financeiro); 802 RPPS, Taxa de Administração. A 801 só existe quando há segregação da massa. 869 = outros extraorçamentários (retenções e consignações)."},
+
+{t:"Portaria STN 710/2021", e:"Quanto ao Código de Acompanhamento da Execução Orçamentária (CO), previsto no Anexo II da Portaria STN nº 710/2021, é correto afirmar que",
+ a:["integra os três dígitos padronizados da fonte de recursos.",
+    "corresponde ao primeiro dígito da fonte na MSC, indicando o exercício de arrecadação.",
+    "é de uso exclusivo da União, definido em portaria da SOF.",
+    "permite identificar, por exemplo, as despesas computadas no mínimo constitucional de manutenção e desenvolvimento do ensino (1001) e de ações e serviços públicos de saúde (1002).",
+    "foi extinto pela Portaria nº 710/2021, que o substituiu pelo complemento da fonte."],
+ c:3, k:"Código de Acompanhamento da Execução Orçamentária",
+ x:"O CO (4 dígitos) é informação complementar da MSC, separada da FR. Exemplos: 1001 MDE, 1002 ASPS, 1070 parcela de 70% do FUNDEB para remuneração dos profissionais. (E) é o contrário: o CO substituiu o antigo \"complemento da fonte\"."},
+
+{t:"Siconfi", e:"Considerando a Lei de Responsabilidade Fiscal, com a redação dada pela LC nº 178/2021, e a Portaria STN nº 642/2019, é correto afirmar:",
+ a:["Os Municípios encaminham suas contas ao Poder Executivo da União até 30 de abril e os Estados, até 31 de maio.",
+    "A MSC agregada deve ser enviada até 30 dias após o encerramento de cada bimestre.",
+    "Estados, DF e Municípios encaminham suas contas ao Poder Executivo da União até 30 de abril, e a União promove a consolidação até 30 de junho.",
+    "A MSC de encerramento deve ser enviada juntamente com a DCA, até 31 de maio.",
+    "O RGF é bimestral e deve ser publicado até 30 dias após o encerramento do período."],
+ c:2, k:"o antigo 31/05 dos Estados",
+ x:"Art. 51 da LRF após a LC 178/2021: prazo único de 30/04 para Estados e Municípios; consolidação pela União até 30/06. (A) é a regra antiga. (B) MSC é mensal, até o último dia do mês seguinte. (D) a MSC de encerramento vai até o último dia de março. (E) RGF é quadrimestral."},
+
+{t:"Siconfi", e:"A respeito da Matriz de Saldos Contábeis (MSC), é correto afirmar que",
+ a:["cada Poder e órgão do art. 20 da LRF envia a sua própria matriz, que é considerada entregue somente após a homologação.",
+    "é enviada exclusivamente pelo Poder Executivo, com dados agregados e não consolidados, utilizando as contas de último nível do PCASP Estendido detalhadas por informações complementares.",
+    "contém dados consolidados, com a exclusão prévia dos saldos recíprocos entre os órgãos do ente.",
+    "admite valores negativos nas contas retificadoras, desde que justificados em nota explicativa.",
+    "é enviada apenas anualmente, após o encerramento do exercício, para a geração da DCA."],
+ c:1, k:"agregados e não consolidados",
+ x:"Anexo I da Portaria 642 (regras gerais da MSC): envio exclusivo do Executivo, dados agregados e não consolidados, contas de último nível do PCASP Estendido. A MSC é considerada entregue na inserção (art. 3º, § 4º), não na homologação. Não se aceitam valores negativos. Há a MSC agregada (mensal) e a de encerramento (anual)."},
+
+{t:"Siconfi", e:"Segundo a Portaria STN nº 642/2019, os demonstrativos gerados automaticamente pelo Siconfi a partir das MSCs",
+ a:["abrangem todos os anexos do RREO e do RGF, inclusive o demonstrativo da projeção atuarial do RPPS.",
+    "dispensam a homologação pelo ente, que passa a ser responsabilidade da STN.",
+    "têm caráter auxiliar e indicativo, cabendo ao ente conferir, editar e homologar, devendo o motivo de eventual alteração ser informado em notas explicativas.",
+    "têm caráter vinculante, sendo vedada ao ente a alteração dos valores pré-preenchidos.",
+    "incluem a DCA, gerada a partir da MSC agregada do mês de dezembro."],
+ c:2, k:"caráter auxiliar e indicativo",
+ x:"Arts. 9º e 10 da Portaria 642. Não são pré-preenchidos os Anexos 8 (MDE), 10 (Projeção Atuarial) e 12 (Saúde) do RREO. A DCA tem rascunho gerado a partir da MSC de ENCERRAMENTO, não da de dezembro."},
+
+{t:"Siconfi", e:"Entre as situações abaixo, constitui validação impeditiva aplicada no carregamento da MSC no Siconfi:",
+ a:["conta de ativo com saldo de natureza invertida (credor).",
+    "divergência entre a RCL do Anexo 3 do RREO e a RCL informada no RGF.",
+    "quantidade de retificações da DCA no exercício.",
+    "desigualdade entre o total de débitos e o total de créditos dentro do grupo das classes 5 e 6 (orçamentárias).",
+    "divergência entre a receita do Anexo I-C da DCA e a do Anexo 1 do RREO do 6º bimestre."],
+ c:3, k:"Validações impeditivas",
+ x:"A carga da MSC exige débitos = créditos em cada grupo (1 a 4 patrimonial; 5 e 6 orçamentário; 7 e 8 controle) e SI ± movimentação = SF. As demais alternativas são verificações de qualidade (Ranking), que não impedem a finalização: saldo invertido (dimensão I), RCL RREO × RGF (III), retificações (I), DCA × RREO (IV)."},
+
+{t:"Siconfi", e:"No Ranking da Qualidade da Informação Contábil e Fiscal no Siconfi, a verificação que confronta a receita orçamentária informada na DCA com a do RREO do último bimestre pertence à dimensão",
+ a:["I, Gestão da Informação.","II, Informações Contábeis.","III, Informações Fiscais.","IV, Informações Contábeis versus Fiscais.","V, Transparência e Controle Social."],
+ c:3, k:"DCA/MSC confrontadas com RREO/RGF",
+ x:"Dimensões: I gestão da informação (envio, prazos, retificações); II contábeis (DCA e MSC de encerramento, aderência ao MCASP); III fiscais (RREO e RGF entre si, aderência ao MDF); IV cruzamento contábil × fiscal. Não existe dimensão V."},
+
+{t:"Siconfi", e:"Quanto à assinatura, homologação e retificação das declarações no Siconfi, é correto afirmar:",
+ a:["A DCA deve ser assinada pelo Chefe do Poder Executivo e pelo profissional de contabilidade responsável, mediante certificado digital e-CPF, modelo A3, padrão ICP-Brasil.",
+    "O RGF é elaborado e homologado exclusivamente pelo Poder Executivo, abrangendo todos os Poderes.",
+    "A homologação tácita e automática após a data-limite afasta a responsabilidade do ente pela homologação tempestiva.",
+    "A MSC enviada pode ser excluída a qualquer tempo pelo ente, independentemente de reenvio.",
+    "A declaração retificada não serve para comprovar a entrega, que exige nova homologação dentro do prazo original."],
+ c:0, k:"e-CPF, modelo A3",
+ x:"Art. 12 da Portaria 642. (B) o RGF é de cada Poder e órgão do art. 20. (C) a homologação automática é meramente auxiliar; a responsabilidade continua sendo do ente (§ 3º, Portaria 1.577/2023). (D) a MSC não pode ser excluída, só reenviada. (E) o status Retificado equivale ao de homologado para comprovar a entrega."},
+
+{t:"Siconfi", e:"O descumprimento do prazo de encaminhamento das contas anuais previsto no art. 51 da LRF impedirá, até que a situação seja regularizada, que o Poder ou órgão",
+ a:["receba transferências constitucionais, como as cotas do FPE e do FPM.",
+    "receba transferências voluntárias e contrate operações de crédito, exceto as destinadas ao pagamento da dívida mobiliária.",
+    "contrate operações de crédito de qualquer natureza, inclusive para refinanciamento da dívida mobiliária.",
+    "realize despesas com pessoal acima de 95% do limite.",
+    "receba transferências voluntárias, exceto as relativas a educação, saúde e assistência social."],
+ c:1, k:"exceto as destinadas ao pagamento da dívida mobiliária",
+ x:"Literal do art. 51, § 2º, da LRF. A mesma sanção vale para o atraso do RGF (art. 55, § 3º) e para o não envio dos dados ao Siconfi (art. 48, § 4º). O Siconfi comunica a situação ao CAUC automaticamente."},
+
+{t:"RPPS", e:"Acerca das provisões matemáticas previdenciárias dos RPPS, é correto afirmar:",
+ a:["A provisão matemática de benefícios concedidos refere-se aos servidores ativos que já cumpriram os requisitos de aposentadoria.",
+    "As provisões matemáticas correspondem à diferença entre os ativos garantidores e o valor atual dos benefícios futuros.",
+    "As provisões matemáticas correspondem ao valor atual dos benefícios futuros menos o valor atual das contribuições futuras, subdividindo-se em provisão de benefícios concedidos (aposentados e pensionistas) e a conceder (servidores ativos).",
+    "Os aportes periódicos do ente para amortização do déficit atuarial são registrados como conta redutora das provisões matemáticas.",
+    "As provisões matemáticas são registradas no patrimônio líquido do RPPS, como reservas atuariais."],
+ c:2, k:"valor atual dos benefícios futuros menos",
+ x:"PMP = VABF menos VACF (IPC 14); é o passivo atuarial (Portaria 1.467, art. 50), no passivo não circulante (2.2.7.2). PMBC = concedidos; PMBaC = a conceder. (B) descreve o resultado atuarial. (D) desde o PCASP 2023, o aporte periódico não reduz a provisão: é ativo do RPPS e obrigação do ente. (E) no PL ficam as reservas atuariais (resultados e ajustes), não as provisões."},
+
+{t:"RPPS", e:"Um RPPS em regime de capitalização apresentou, na avaliação atuarial de 31/12: provisão matemática de benefícios concedidos de R$ 400 milhões; provisão matemática de benefícios a conceder de R$ 500 milhões (ambas já líquidas das contribuições futuras); aplicações financeiras de R$ 620 milhões, das quais R$ 20 milhões correspondem a recursos da taxa de administração; e créditos de parcelamento de débitos do ente, reconhecidos pelo RPPS e contabilizados pelo ente como dívida fundada, de R$ 50 milhões. O resultado atuarial é",
+ a:["déficit de R$ 300 milhões.","déficit de R$ 230 milhões.","déficit de R$ 250 milhões.","déficit de R$ 280 milhões.","superávit de R$ 170 milhões."],
+ c:2, k:"O resultado atuarial será obtido",
+ x:"Passivo atuarial = 400 + 500 = 900. Ativos garantidores = 620 menos 20 (a taxa de administração não compõe) + 50 (parcelamento reconhecido, com o ente registrando como dívida fundada, compõe; art. 51, II) = 650. Resultado = 650 menos 900 = déficit de 250. (B) 230 = não excluir a taxa de administração. (A) 300 = excluir o parcelamento. (D) 280 = excluir o parcelamento e não excluir a taxa."},
+
+{t:"RPPS", e:"O repasse de recursos do Tesouro estadual ao RPPS para cobertura de insuficiência financeira do Fundo em Repartição deve ser registrado, segundo o MCASP,",
+ a:["como despesa orçamentária intraorçamentária no ente, natureza 3.3.91.97, e receita intraorçamentária no RPPS.",
+    "como despesa com pessoal no ente, natureza 3.1.91.13, por se tratar de encargo patronal.",
+    "como transferência financeira, sem execução orçamentária, com VPD de transferência concedida no ente e VPA de transferência recebida no RPPS.",
+    "como operação de crédito do RPPS junto ao ente, a ser amortizada nos exercícios seguintes.",
+    "como receita de capital no RPPS, por aumentar os ativos garantidores do plano."],
+ c:2, k:"não há execução orçamentária",
+ x:"O RPPS já executou a despesa do benefício; se o ente também empenhasse, haveria duplicidade. É descentralização financeira: no ente, D 3.5.1.3.2 (VPD) e C 2.1.8.9.2; no RPPS, VPA 4.5.1.3.2. (A) é o aporte para déficit ATUARIAL. (B) é a alíquota suplementar. (D) empréstimo entre RPPS e ente é vedado."},
+
+{t:"RPPS", e:"Conforme a Portaria MTP nº 1.467/2022, os aportes destinados ao equacionamento do déficit atuarial do RPPS",
+ a:["podem ser utilizados para pagar benefícios de qualquer dos fundos, desde que haja insuficiência financeira no mês.",
+    "devem ser aplicados, conforme as normas do CMN, por no mínimo 10 anos, podendo depois retornar ao Tesouro.",
+    "somente podem ser utilizados para o pagamento de benefícios dos segurados vinculados ao Fundo em Capitalização, devendo ser geridos de forma segregada e aplicados, conforme o CMN, por no mínimo 5 anos a contar do repasse.",
+    "dispensam previsão em lei do ente, bastando a aprovação do conselho deliberativo do RPPS.",
+    "podem ser resgatados pelo ente se o RPPS apresentar superávit financeiro no exercício."],
+ c:2, k:"no mínimo, 5 anos",
+ x:"Art. 55, § 8º, da Portaria 1.467. O plano de amortização só se considera implementado com lei do ente (art. 55, § 6º). Os recursos do RPPS não retornam ao ente."},
+
+{t:"RPPS", e:"Para equacionar o déficit atuarial de seu RPPS, o Estado instituiu, por lei, alíquota de contribuição suplementar e, adicionalmente, aportes mensais com valores preestabelecidos. No orçamento do ente, essas despesas classificam-se, respectivamente, nas naturezas",
+ a:["3.1.91.13 e 3.3.91.97.","3.3.91.97 e 3.1.91.13.","3.1.90.13 e 3.3.90.97.","3.3.91.13 e 4.5.91.97.","3.1.91.97 e 3.1.91.13."],
+ c:0, k:"Amortizar déficit atuarial",
+ x:"Contribuição suplementar: encargo patronal (grupo 1 Pessoal, elemento 13), modalidade 91 por ser operação intraorçamentária. Aporte periódico: Outras Despesas Correntes, elemento 97, que exclui expressamente as contribuições por alíquota suplementar. A modalidade é 91, não 90, porque o RPPS integra o orçamento do ente."},
+
+{t:"RPPS", e:"Em relação à segregação da massa de segurados do RPPS, é correto afirmar:",
+ a:["O Fundo em Capitalização constitui grupo fechado em extinção, vedado o ingresso de novos segurados.",
+    "É permitida a transferência de recursos do Fundo em Capitalização para o Fundo em Repartição sempre que este apresentar insuficiência financeira, mediante aprovação do conselho deliberativo.",
+    "Implantada a segregação, o ente passa a ser considerado sem déficit atuarial para fins de fixação das alíquotas de contribuição.",
+    "O Fundo em Repartição constitui grupo fechado em extinção, vedado o ingresso de novos segurados, e é vedada a transferência de segurados, recursos ou obrigações entre os fundos, ressalvada a revisão admitida na norma.",
+    "A segregação pode ser implantada por ato do gestor do RPPS, dispensadas a lei e a análise da Secretaria de Previdência."],
+ c:3, k:"fechado em extinção",
+ x:"Portaria 1.467, arts. 58 a 62. (A) inverte os fundos. (B) a transferência entre fundos é vedada. (C) EC 103, art. 9º, § 5º: a segregação não é considerada ausência de déficit. (E) exige lei, estudo técnico e envio à SPREV."},
+
+{t:"RPPS", e:"Na hipótese de o RPPS apresentar superávit atuarial, é correto afirmar que",
+ a:["o valor excedente deve ser devolvido ao Tesouro do ente, em parcelas anuais.",
+    "o superávit deve ser destinado, obrigatoriamente, a uma reserva de contingência de até 25% das provisões matemáticas, e o excedente a uma reserva especial.",
+    "não há possibilidade legal de devolução ao ente, admitindo-se a reformulação do plano de custeio, observados os requisitos da norma, como receitas superiores às despesas nos cinco exercícios seguintes.",
+    "o superávit deve ser registrado como VPA do exercício e distribuído aos segurados ativos.",
+    "o superávit permite ao ente suspender as contribuições patronais por prazo indeterminado."],
+ c:2, k:"Não pode ser devolvido ao ente",
+ x:"O MCASP afirma que não há possibilidade legal de devolução ao ente; admite-se reformular o plano de custeio (Portaria 1.467, art. 65: fundamentação atuarial, receitas maiores que despesas nos 5 exercícios seguintes, ativos garantidores superiores à PMBC e apreciação do conselho). (B) é a regra das entidades fechadas de previdência complementar (LC 109), usada como distrator."},
+
+{t:"RPPS", e:"O Estado X reorganizou seu RPPS: os servidores que ingressaram até 31/12/2023 foram alocados em fundo financeiro em regime de repartição simples, e os que ingressaram a partir de 01/01/2024 passaram a integrar fundo em regime de capitalização. Nessa situação,",
+ a:["as eventuais insuficiências do fundo em repartição devem ser cobertas pelo Tesouro do ente, e os recursos desse fundo são identificados na fonte 801.",
+    "o déficit atuarial do fundo em repartição deve ser equacionado por aportes periódicos no elemento de despesa 97.",
+    "os recursos do fundo em capitalização podem ser utilizados para cobrir as insuficiências do fundo em repartição, desde que devolvidos em até 5 anos.",
+    "ambos os fundos devem ser identificados na fonte 800, por se tratar do mesmo RPPS.",
+    "o fundo em capitalização deixa de estar sujeito a avaliação atuarial anual, por ser composto apenas de novos servidores."],
+ c:0, k:"SC SEGURO",
+ x:"É o modelo do IPREV/SC após a LC 848/2023 (SC Seguro = repartição; SC Futuro = capitalização). A insuficiência do fundo em repartição é coberta pelo ente (Lei 9.717, art. 2º, § 1º), por transferência financeira; fonte 801. (B) o déficit atuarial só se apura no Fundo em Capitalização. (C) é vedada a transferência entre fundos. (E) a avaliação atuarial é anual para todo o RPPS."},
+
+{t:"RPPS", e:"Segundo a Portaria MTP nº 1.467/2022 e a Lei nº 9.717/1998, NÃO compõem os ativos garantidores dos compromissos do plano de benefícios do RPPS",
+ a:["as aplicações financeiras de recursos previdenciários realizadas conforme as normas do CMN.",
+    "os recursos da taxa de administração.",
+    "os títulos públicos federais adquiridos com recursos previdenciários.",
+    "os créditos de parcelamentos de débitos do ente reconhecidos pelo RPPS e contabilizados pelo ente como dívida fundada.",
+    "os bens e direitos vinculados por lei ao regime, destacados como investimentos."],
+ c:1, k:"recursos da taxa de administração",
+ x:"Anexo VI, art. 2º, IV, da Portaria 1.467: excluem-se dos ativos garantidores os recursos da taxa de administração, os fundos para oscilação de riscos e as provisões em repartição de capitais de cobertura. Os demais itens compõem (art. 51). Títulos públicos são permitidos se forem do Governo Federal (Lei 9.717, art. 6º, VI)."},
+
+{t:"RPPS / RREO", e:"Sobre os demonstrativos do RREO relacionados ao RPPS, é correto afirmar:",
+ a:["O Demonstrativo da Projeção Atuarial acompanha o RREO de todos os bimestres e é gerado automaticamente pelo Siconfi a partir da MSC.",
+    "O Demonstrativo das Receitas e Despesas Previdenciárias é publicado apenas no último bimestre, com projeção de 35 anos.",
+    "O Demonstrativo da Projeção Atuarial integra o RREO do último bimestre, com projeção de pelo menos 75 anos, e não é pré-preenchido pelo Siconfi a partir das MSCs.",
+    "Os aportes para cobertura do déficit atuarial compõem o total das receitas previdenciárias no Anexo 4, reduzindo a necessidade de financiamento.",
+    "Os repasses para cobertura de insuficiência financeira são registrados como receita previdenciária de contribuição patronal."],
+ c:2, k:"pelo menos 75 anos",
+ x:"LRF, art. 53, § 1º, II: as projeções atuariais acompanham o RREO do último bimestre. MDF: projeção mínima de 75 anos. Portaria 642: os Anexos 8, 10 e 12 do RREO não são pré-preenchidos. O Anexo 4 é bimestral; aportes e repasses para insuficiência ficam fora das receitas previdenciárias e aparecem em quadros próprios."}
+];
+
+const PAGINAS={"possibilitar a eliminação da dupla contagem":4,"Pegadinha FCC clássica":5,"Aporte para Cobertura do Déficit Atuarial do RPPS":7,"exclusivos de Estados, DF e Municípios":4,"Natureza da despesa de ambas":5,"Criar fonte nova":8,"Recursos de Exercícios Anteriores":8,"Fundo em Repartição (Plano Financeiro)":9,"Código de Acompanhamento da Execução Orçamentária":8,"o antigo 31/05 dos Estados":11,"agregados e não consolidados":12,"caráter auxiliar e indicativo":13,"Validações impeditivas":13,"DCA/MSC confrontadas com RREO/RGF":14,"e-CPF, modelo A3":13,"exceto as destinadas ao pagamento da dívida mobiliária":14,"valor atual dos benefícios futuros menos":15,"O resultado atuarial será obtido":16,"não há execução orçamentária":18,"no mínimo, 5 anos":18,"Amortizar déficit atuarial":18,"fechado em extinção":19,"Não pode ser devolvido ao ente":17,"SC SEGURO":19,"recursos da taxa de administração":15,"pelo menos 75 anos":19};
+const ARQ = "Resumo CASP - Portarias 710 e 163, Siconfi e RPPS (SEFAZ SC).docx";
+const L = "ABCDE";
+// letra final desejada da correta (FCC distribui o gabarito); null = manter ordem original
+const ALVO = ["B",null,"E",null,"A","C","E","B","D","A","E","C","B",null,"A","C","E","B","D","A","C","E","B","D","C","A"];
+const Q = QUESTOES.map((q,i)=>{
+  const alvo = ALVO[i]; let rot = 0;
+  if (alvo) rot = (L.indexOf(alvo) - q.c + 5) % 5;
+  const alts = new Array(5); const mapa = {};
+  q.a.forEach((t,j)=>{ const n=(j+rot)%5; alts[n]=t; mapa[L[j]]=L[n]; });
+  const x = q.x.replace(/\(([A-E])\)/g,(m,l)=>"("+mapa[l]+")");
+  return {...q, alts, correta:(q.c+rot)%5, x};
+});
+const estado = {}; let filtro = "Todas";
+function salvar(){ try{ localStorage.setItem("qfcc-sc-casp", JSON.stringify(estado)); }catch(e){} }
+try{ Object.assign(estado, JSON.parse(localStorage.getItem("qfcc-sc-casp")||"{}")); }catch(e){}
+const temas = ["Todas", ...new Set(Q.map(q=>q.t.split(" /")[0]))];
+function renderFiltros(){
+  document.getElementById("filtros").innerHTML = temas.map(t=>`<button class="chip ${t===filtro?"on":""}" data-f="${t}">${t}</button>`).join(" ");
+}
+function render(){
+  const el = document.getElementById("lista"); el.innerHTML = "";
+  Q.forEach((q,i)=>{
+    if (filtro!=="Todas" && !q.t.startsWith(filtro)) return;
+    const esc = estado[i]; const resp = esc!==undefined;
+    const pag = (typeof PAGINAS!=="undefined" && PAGINAS[q.k]) ? PAGINAS[q.k] : null;
+    const d = document.createElement("div"); d.className="q";
+    d.innerHTML = `<div class="qh"><span class="num">Q ${String(i+1).padStart(2,"0")}</span><span class="tag">${q.t}</span><span class="tag">FCC · inédita</span></div>
+      <p class="en">${q.e}</p>
+      ${q.alts.map((t,j)=>{ let c=""; if(resp){ if(j===q.correta)c="certa"; else if(j===esc)c="errada"; }
+        return `<button class="alt ${c}" data-q="${i}" data-a="${j}" ${resp?"disabled":""}><b>(${L[j]})</b><span>${t}</span></button>`; }).join("")}
+      <div class="res ${resp?"show":""}">
+        ${esc===-1?`<div class="veredito">Gabarito: ${L[q.correta]}</div>`:`<div class="veredito ${esc===q.correta?"ok":"no"}">${esc===q.correta?"Acertou":"Errou"}. Gabarito: ${L[q.correta]}</div>`}
+        <div>${q.x}</div>
+        <div class="rev">${q.d?`<b>${q.d}</b>. `:""}<a href="casp-portarias-siconfi-rpps-resumo.html#:~:text=${encodeURIComponent(q.k)}" target="_blank" rel="noopener">Abrir no resumo</a>${pag?` (página ${pag} no Word)`:""}. Ctrl+F: <code>${q.k}</code></div>
+      </div>`;
+    el.appendChild(d);
+  });
+  const feitas = Object.keys(estado).filter(k=>estado[k]!==-1);
+  const certas = feitas.filter(k=>estado[k]===Q[k].correta).length;
+  document.getElementById("score").textContent = `${feitas.length} de ${Q.length} respondidas · ${certas} acertos` + (feitas.length?` (${Math.round(100*certas/feitas.length)}%)`:"");
+}
+document.addEventListener("click",e=>{
+  const a = e.target.closest(".alt"); if (a && !a.disabled){ estado[+a.dataset.q] = +a.dataset.a; salvar(); render(); return; }
+  const f = e.target.closest("[data-f]"); if (f){ filtro=f.dataset.f; renderFiltros(); render(); }
+});
+document.getElementById("mostrar").onclick=()=>{ Q.forEach((q,i)=>{ if(estado[i]===undefined) estado[i]=-1; }); salvar(); render(); };
+document.getElementById("refazer").onclick=()=>{ for(const k in estado) delete estado[k]; salvar(); render(); window.scrollTo(0,0); };
+document.getElementById("themeBtn").onclick=()=>{ const r=document.documentElement; const dark = r.dataset.theme ? r.dataset.theme==="dark" : matchMedia("(prefers-color-scheme: dark)").matches; r.dataset.theme = dark?"light":"dark"; };
+renderFiltros(); render();
+</script>
+</body>
+</html>
