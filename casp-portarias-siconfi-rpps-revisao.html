@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revisão da Vanessa: Portarias 710 e 163, Siconfi e RPPS</title>
+<style>
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Segoe UI",system-ui,Arial,sans-serif; background:linear-gradient(160deg,#e6f5f2,#c9e9e4); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:70px 16px 24px; color:#1E2B38;}
+  .box{width:100%; max-width:560px; text-align:center;}
+  h1{font-size:1.3rem; color:#0f766e; margin-bottom:4px;}
+  .sub{color:#64748b; font-size:.9rem; margin-bottom:16px;}
+  .contador{font-weight:700; color:#64748b; margin-bottom:10px;}
+  .tema{display:inline-block; font-size:.78rem; font-weight:700; color:#0f766e; background:#fff; border:1px solid #0f766e; border-radius:999px; padding:2px 10px; margin-bottom:10px;}
+  .cartao{background:#fff; border-radius:22px; box-shadow:0 12px 34px rgba(30,43,56,.16); padding:30px 24px; min-height:260px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px;}
+  .rotulo{font-size:.75rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:800;}
+  .rotulo.p{color:#E25E42;} .rotulo.r{color:#0f766e;}
+  .pergunta{font-size:1.25rem; font-weight:800; line-height:1.4;}
+  .resposta{font-size:1.08rem; line-height:1.55; color:#1E2B38; display:none; border-top:2px dashed #e2e8f0; padding-top:14px; width:100%;}
+  .resposta.mostrar{display:block; animation:sobe .2s ease;}
+  .fonte{display:block; margin-top:8px; font-size:.82rem; color:#64748b;}
+  @keyframes sobe{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+  .bts{display:flex; gap:10px; margin-top:16px; justify-content:center; flex-wrap:wrap;}
+  button{font-family:inherit; font-size:1rem; font-weight:800; border:none; cursor:pointer; padding:13px 20px; border-radius:14px; transition:filter .15s;}
+  button:hover{filter:brightness(1.08);}
+  .ver{background:#0f766e; color:#fff;} .prox{background:#E25E42; color:#fff;} .ant{background:#e2e8f0; color:#1E2B38;} .emb{background:#fff; color:#1E2B38; border:2px solid #cbd5e1;}
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:9999;display:inline-flex;align-items:center;gap:7px;background:#1d4e89;color:#fff;text-decoration:none;font-weight:800;font-size:1rem;padding:11px 18px;border-radius:30px;box-shadow:0 4px 14px rgba(0,0,0,.3);font-family:'Segoe UI',system-ui,Arial,sans-serif;">&larr; Voltar</a>
+<div class="box">
+  <h1>Contabilidade Pública em cartões</h1>
+  <div class="sub">Leia a pergunta, responda de cabeça e só depois confira. Revisar o que você já sabe é o que segura na memória.</div>
+  <div class="contador" id="contador"></div>
+  <div class="tema" id="tema"></div>
+  <div class="cartao">
+    <div><div class="rotulo p">Pergunta</div><div class="pergunta" id="pergunta"></div></div>
+    <div class="resposta" id="resposta"></div>
+  </div>
+  <div class="bts">
+    <button class="ant" id="ant">&larr; Anterior</button>
+    <button class="ver" id="ver">Ver resposta</button>
+    <button class="prox" id="prox">Próximo &rarr;</button>
+  </div>
+  <div class="bts"><button class="emb" id="emb">Embaralhar e recomeçar</button></div>
+</div>
+<script>
+const cartoes = [
+["Portaria 710","O que é fonte ou destinação de recursos?","O agrupamento de receitas que possuem as mesmas normas de aplicação na despesa.","Portaria Conjunta STN/SOF 20/2021, art. 1º, § 1º"],
+["Portaria 710","Quantos dígitos tem a fonte padronizada, e quem usa cada faixa?","3 dígitos.<br>União: 000 a 499 (definidos pela SOF).<br>Estados, DF e Municípios: 500 a 999 (definidos pela STN, na Portaria 710).","Portaria Conjunta 20/2021, art. 1º"],
+["Portaria 710","Desde quando a classificação da Portaria 710 é obrigatória?","A partir do exercício de 2023, incluindo o PLDO e o PLOA de 2023, elaborados em 2022.","Portaria Conjunta 20/2021, art. 3º"],
+["Portaria 710","O Estado pode criar uma fonte nova?","Não. Criar fonte é exclusivo da STN.<br>O ente só pode detalhar os códigos padronizados, e não precisa enviar esse detalhamento à STN.","Portaria Conjunta 20/2021, art. 2º, § 3º"],
+["Portaria 710","Na MSC, o que indica o 1º dígito da fonte (ex.: 2.540)?","O exercício: 1 = corrente; 2 = exercícios anteriores; 9 = recursos condicionados.<br>Esse dígito não faz parte do código padronizado de 3 dígitos.","Portaria 710, Anexo II"],
+["Portaria 710","Quais são as fontes do RPPS?","800: Fundo em Capitalização (plano previdenciário).<br>801: Fundo em Repartição (plano financeiro).<br>802: Taxa de Administração.","Portaria 710, Anexo I"],
+["Portaria 710","O que são as fontes 500 e 540?","500: recursos não vinculados de impostos.<br>540: transferências do FUNDEB (impostos e transferências de impostos).","Portaria 710, Anexo I"],
+["Portaria 710","O que é o CO, e quais os códigos mais cobrados?","Código de Acompanhamento da Execução Orçamentária (4 dígitos).<br>1001: MDE. 1002: saúde (ASPS). 1070: os 70% do FUNDEB para remuneração dos profissionais da educação.","Portaria 710, Anexo II"],
+["Portaria 163","A natureza da despesa se compõe de quê?","Categoria econômica, grupo de natureza da despesa e elemento de despesa.","Portaria 163/2001, art. 3º"],
+["Portaria 163","Para que serve a modalidade de aplicação?","É informação gerencial: indica quem aplica os recursos.<br>Objetivo principal: eliminar a dupla contagem dos recursos transferidos ou descentralizados.","Portaria 163/2001, art. 3º, § 1º"],
+["Portaria 163","Qual a estrutura da natureza da despesa na execução?","c.g.mm.ee.dd: categoria, grupo, modalidade, elemento e desdobramento.<br>O desdobramento (dd) é facultativo.","Portaria 163/2001, art. 5º"],
+["Portaria 163","Na LOA, até onde vai, no mínimo, a discriminação da despesa?","Até a modalidade de aplicação: categoria econômica, grupo de natureza e modalidade.<br>O elemento aparece na execução.","Portaria 163/2001, art. 6º"],
+["Portaria 163","Como se classifica a Reserva de Contingência?","Natureza da despesa 9.9.99.99.99.<br>Modalidade 99 (A Definir), vedada a execução.","Portaria 163/2001, art. 8º"],
+["Portaria 163","Quais são os grupos de natureza da despesa?","1 Pessoal e Encargos. 2 Juros e Encargos da Dívida. 3 Outras Despesas Correntes.<br>4 Investimentos. 5 Inversões Financeiras. 6 Amortização da Dívida.","Portaria 163/2001, Anexo II"],
+["Portaria 163","Modalidade 90 x modalidade 91?","90: aplicação direta.<br>91: aplicação direta decorrente de operação entre órgãos, fundos e entidades do mesmo orçamento (intraorçamentária).","Portaria 163/2001, Anexo II"],
+["Portaria 163","Que categoria recebe a receita intraorçamentária?","7 = intraorçamentária corrente.<br>8 = intraorçamentária de capital.","Portaria 163/2001, art. 2º, § 13"],
+["Portaria 163","O que é o elemento 97?","Aporte para cobertura do déficit atuarial do RPPS.<br>A alíquota suplementar não entra aqui: é o elemento 13.","Portaria 163/2001, Anexo II"],
+["Siconfi","Qual o prazo da DCA?","30 de abril, para Estados, DF e Municípios (prazo único desde a LC 178/2021).<br>A União consolida até 30 de junho.","LRF, art. 51"],
+["Siconfi","Qual o prazo de envio da MSC?","Mensal: até o último dia do mês seguinte.<br>MSC de encerramento: até o último dia de março do ano seguinte.","Portaria STN 642/2019, art. 8º"],
+["Siconfi","Quem envia a MSC, e como vêm os dados?","Só o Poder Executivo.<br>Dados agregados e não consolidados (sem excluir os saldos recíprocos).","Portaria 642, Anexo I"],
+["Siconfi","Quando cada declaração conta como entregue?","MSC: na inserção no Siconfi.<br>DCA, RREO e RGF: só na homologação.","Portaria 642, art. 3º"],
+["Siconfi","Quais anexos do RREO o Siconfi não pré-preenche pela MSC?","Anexo 8 (MDE), Anexo 10 (Projeção Atuarial) e Anexo 12 (Saúde).","Portaria 642, art. 9º"],
+["Siconfi","Validação impeditiva x verificação do Ranking?","Validação impeditiva: bloqueia o envio (ex.: débitos diferentes de créditos, valor negativo).<br>Verificação: não bloqueia, só pontua no Ranking (ex.: saldo invertido).","Portaria 642, art. 15"],
+["Siconfi","Quais as 4 dimensões do Ranking da qualidade da informação?","I Gestão da informação. II Informações contábeis.<br>III Informações fiscais. IV Informações contábeis x fiscais.","Portaria STN/MF 807/2023"],
+["Siconfi","Quem assina obrigatoriamente a DCA, e com que certificado?","O Chefe do Executivo e o profissional de contabilidade responsável.<br>Certificado digital e-CPF, modelo A3, padrão ICP-Brasil.","Portaria 642, art. 12"],
+["Siconfi","Qual a sanção por atrasar a DCA?","O Poder ou órgão fica impedido de receber transferências voluntárias e de contratar operações de crédito, exceto as destinadas ao pagamento da dívida mobiliária.","LRF, art. 51, § 2º"],
+["RPPS","Qual a fórmula das provisões matemáticas previdenciárias?","Valor atual dos benefícios futuros menos valor atual das contribuições futuras.","IPC 14 da STN"],
+["RPPS","PMBC x PMBaC?","PMBC: benefícios concedidos (aposentados e pensionistas).<br>PMBaC: benefícios a conceder (servidores ativos).","Portaria MTP 1.467/2022"],
+["RPPS","Como se apura o resultado atuarial?","Passivo atuarial (provisões) menos ativos garantidores.<br>Provisões maiores que os ativos = déficit atuarial.","Portaria 1.467, art. 50, § 1º"],
+["RPPS","O que não entra nos ativos garantidores?","Os recursos da taxa de administração, os fundos para oscilação de riscos e as provisões em repartição de capitais de cobertura.","Portaria 1.467, Anexo VI, art. 2º, IV"],
+["RPPS","Déficit financeiro x déficit atuarial?","Financeiro: receitas menores que despesas no ano. O ente cobre.<br>Atuarial: projeção de longo prazo. Só no Fundo em Capitalização; resolve com plano de amortização.","Portaria 1.467; IPC 14"],
+["RPPS","Como o ente contabiliza a cobertura de insuficiência financeira?","Como transferência financeira, sem execução orçamentária.<br>Se o ente empenhasse, a despesa do benefício seria contada duas vezes.","MCASP"],
+["RPPS","Quais as regras dos aportes para o déficit atuarial?","Só pagam benefícios do Fundo em Capitalização.<br>Gestão segregada.<br>Ficam aplicados por no mínimo 5 anos.","Portaria 1.467, art. 55, § 8º"],
+["RPPS","O que caracteriza a segregação da massa?","O Fundo em Repartição é grupo fechado em extinção (sem novos segurados).<br>É vedado transferir segurados, recursos ou obrigações entre os fundos.","Portaria 1.467, arts. 58 a 61"],
+["RPPS","O superávit atuarial pode voltar para o ente?","Não. Admite-se apenas reformular o plano de custeio, cumpridos os requisitos.","MCASP; Portaria 1.467, art. 65"],
+["RPPS","Como ficou a segregação no RPPS de Santa Catarina?","LC 848/2023: SC Seguro (repartição) para quem ingressou até 31/12/2023.<br>SC Futuro (capitalização) para quem ingressou a partir de 01/01/2024.","LC estadual 848/2023"]
+]
+;
+let ordem = cartoes.map((_,i)=>i), pos = 0;
+const $ = id => document.getElementById(id);
+function mostra(){
+  const c = cartoes[ordem[pos]];
+  $("contador").textContent = `Cartão ${pos+1} de ${cartoes.length}`;
+  $("tema").textContent = c[0];
+  $("pergunta").innerHTML = c[1];
+  $("resposta").innerHTML = `<div class="rotulo r">Resposta</div>${c[2]}<span class="fonte">${c[3]}</span>`;
+  $("resposta").classList.remove("mostrar");
+  $("ver").textContent = "Ver resposta";
+}
+$("ver").onclick = () => { const r=$("resposta"); r.classList.toggle("mostrar"); $("ver").textContent = r.classList.contains("mostrar") ? "Esconder" : "Ver resposta"; };
+$("prox").onclick = () => { pos = (pos+1) % cartoes.length; mostra(); };
+$("ant").onclick = () => { pos = (pos-1+cartoes.length) % cartoes.length; mostra(); };
+$("emb").onclick = () => { for(let i=ordem.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [ordem[i],ordem[j]]=[ordem[j],ordem[i]];} pos=0; mostra(); };
+document.addEventListener("keydown", e => { if(e.key==="ArrowRight") $("prox").click(); else if(e.key==="ArrowLeft") $("ant").click(); else if(e.key===" "){ e.preventDefault(); $("ver").click(); } });
+mostra();
+</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revisão da Vanessa: EC 132/2023</title>
+<style>
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Segoe UI",system-ui,Arial,sans-serif; background:linear-gradient(160deg,#f1ecfd,#ddd0f7); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:70px 16px 24px; color:#1E2B38;}
+  .box{width:100%; max-width:560px; text-align:center;}
+  h1{font-size:1.3rem; color:#6d28d9; margin-bottom:4px;}
+  .sub{color:#64748b; font-size:.9rem; margin-bottom:16px;}
+  .contador{font-weight:700; color:#64748b; margin-bottom:10px;}
+  .tema{display:inline-block; font-size:.78rem; font-weight:700; color:#6d28d9; background:#fff; border:1px solid #6d28d9; border-radius:999px; padding:2px 10px; margin-bottom:10px;}
+  .cartao{background:#fff; border-radius:22px; box-shadow:0 12px 34px rgba(30,43,56,.16); padding:30px 24px; min-height:260px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px;}
+  .rotulo{font-size:.75rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:800;}
+  .rotulo.p{color:#E25E42;} .rotulo.r{color:#6d28d9;}
+  .pergunta{font-size:1.25rem; font-weight:800; line-height:1.4;}
+  .resposta{font-size:1.08rem; line-height:1.55; color:#1E2B38; display:none; border-top:2px dashed #e2e8f0; padding-top:14px; width:100%;}
+  .resposta.mostrar{display:block; animation:sobe .2s ease;}
+  .fonte{display:block; margin-top:8px; font-size:.82rem; color:#64748b;}
+  @keyframes sobe{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+  .bts{display:flex; gap:10px; margin-top:16px; justify-content:center; flex-wrap:wrap;}
+  button{font-family:inherit; font-size:1rem; font-weight:800; border:none; cursor:pointer; padding:13px 20px; border-radius:14px; transition:filter .15s;}
+  button:hover{filter:brightness(1.08);}
+  .ver{background:#6d28d9; color:#fff;} .prox{background:#E25E42; color:#fff;} .ant{background:#e2e8f0; color:#1E2B38;} .emb{background:#fff; color:#1E2B38; border:2px solid #cbd5e1;}
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:9999;display:inline-flex;align-items:center;gap:7px;background:#1d4e89;color:#fff;text-decoration:none;font-weight:800;font-size:1rem;padding:11px 18px;border-radius:30px;box-shadow:0 4px 14px rgba(0,0,0,.3);font-family:'Segoe UI',system-ui,Arial,sans-serif;">&larr; Voltar</a>
+<div class="box">
+  <h1>EC 132 (Reforma Tributária) em cartões</h1>
+  <div class="sub">Leia a pergunta, responda de cabeça e só depois confira. Revisar o que você já sabe é o que segura na memória.</div>
+  <div class="contador" id="contador"></div>
+  <div class="tema" id="tema"></div>
+  <div class="cartao">
+    <div><div class="rotulo p">Pergunta</div><div class="pergunta" id="pergunta"></div></div>
+    <div class="resposta" id="resposta"></div>
+  </div>
+  <div class="bts">
+    <button class="ant" id="ant">&larr; Anterior</button>
+    <button class="ver" id="ver">Ver resposta</button>
+    <button class="prox" id="prox">Próximo &rarr;</button>
+  </div>
+  <div class="bts"><button class="emb" id="emb">Embaralhar e recomeçar</button></div>
+</div>
+<script>
+const cartoes = [
+["IBS e CBS","Quem institui o IBS, e de quem é a competência?","Lei complementar institui.<br>A competência é compartilhada entre Estados, DF e Municípios.","CF, art. 156-A, caput"],
+["IBS e CBS","Qual princípio informa o IBS?","O princípio da neutralidade.","CF, art. 156-A, § 1º"],
+["IBS e CBS","Quem fixa a alíquota de referência do IBS?","Resolução do Senado Federal, nos termos de lei complementar.<br>Vale se o próprio ente não fixar outra.","CF, art. 156-A, § 1º, XII"],
+["IBS e CBS","O IBS integra a própria base de cálculo?","Não. Não integra a própria base, nem a do Imposto Seletivo, nem a da CBS.","CF, art. 156-A, § 1º, IX"],
+["IBS e CBS","IBS e CBS precisam seguir as mesmas regras em quê?","Fatos geradores, bases de cálculo, não incidência e sujeitos passivos; imunidades; regimes específicos, diferenciados ou favorecidos; não cumulatividade e creditamento.","CF, art. 149-B"],
+["IBS e CBS","Quem administra o IBS de forma integrada?","O Comitê Gestor do IBS, com exclusividade.","CF, art. 156-B"],
+["IBS e CBS","Como é composta a instância máxima do Comitê Gestor?","27 membros dos Estados e DF.<br>27 dos Municípios e DF: 14 eleitos com voto igual por Município e 13 com voto ponderado pela população.","CF, art. 156-B, § 3º"],
+["IBS e CBS","Quando uma deliberação do Comitê Gestor é aprovada?","Com votos, ao mesmo tempo:<br>da maioria absoluta dos Estados e DF, que representem mais de 50% da população do País;<br>e da maioria absoluta dos Municípios e DF.","CF, art. 156-B, § 4º"],
+["IBS e CBS","Quem exerce o controle externo do Comitê Gestor?","Os Estados, o DF e os Municípios.","CF, art. 156-B, § 2º, IV"],
+["IBS e CBS","Quem julga conflitos entre entes, ou entre eles e o Comitê Gestor, sobre IBS e CBS?","O STJ.","CF, art. 105, I, j"],
+["IBS e CBS","Compra da administração pública: para quem vai o IBS e a CBS?","Integralmente para o ente contratante.<br>As alíquotas dos demais entes vão a zero e a do contratante sobe na mesma medida.","CF, art. 149-C"],
+["IBS e CBS","O que a lei complementar deve prever sobre devolução do IBS?","As hipóteses de devolução a pessoas físicas, com limites e beneficiários, para reduzir as desigualdades de renda (cashback).","CF, art. 156-A, § 5º, VIII"],
+["IBS e CBS","O optante do Simples pode recolher IBS e CBS por fora do Simples?","Pode, é facultado. Nesse caso essas parcelas não são cobradas pelo regime único.","CF, art. 146, § 2º"],
+["Imposto Seletivo","Onde o Imposto Seletivo não incide?","Nas exportações e nas operações com energia elétrica e telecomunicações.","CF, art. 153, § 6º, I"],
+["Imposto Seletivo","Quantas vezes o Imposto Seletivo incide sobre o mesmo bem?","Uma única vez sobre o bem ou serviço.","CF, art. 153, § 6º, II"],
+["Imposto Seletivo","Como fica o Imposto Seletivo na extração?","É cobrado independentemente da destinação (mesmo se exportado).<br>Alíquota máxima de 1% do valor de mercado do produto.","CF, art. 153, § 6º, VII"],
+["Regimes","Qual a redução de alíquota da lista do art. 9º (educação, saúde, medicamentos etc.)?","60%, nas operações definidas em lei complementar.","EC 132, art. 9º, § 1º"],
+["Regimes","Qual a redução para profissões intelectuais?","30%, para serviços de profissão intelectual, científica, literária ou artística, desde que fiscalizada por conselho profissional.","EC 132, art. 9º, § 12"],
+["Regimes","O que acontece com os produtos da Cesta Básica Nacional de Alimentos?","IBS e CBS com alíquota reduzida a zero.<br>Lei complementar define os produtos.","EC 132, art. 8º"],
+["Transição","O que acontece em 2026?","Ano de teste: IBS estadual de 0,1% e CBS de 0,9%.","ADCT, art. 125"],
+["Transição","O que acontece a partir de 2027?","Começam a CBS e o Imposto Seletivo.<br>PIS e Cofins são extintos.<br>O IPI vai a zero, exceto para produtos incentivados na Zona Franca de Manaus.","ADCT, art. 126"],
+["Transição","Qual a alíquota do IBS em 2027 e 2028?","0,05% estadual e 0,05% municipal.<br>A CBS é reduzida em 0,1 ponto percentual.","ADCT, art. 127"],
+["Transição","Como caem o ICMS e o ISS de 2029 a 2032?","As alíquotas viram uma fração das atuais:<br>9/10 em 2029; 8/10 em 2030; 7/10 em 2031; 6/10 em 2032.","ADCT, art. 128"],
+["Transição","Quando ICMS e ISS são extintos?","A partir de 2033.","ADCT, art. 129"],
+["Fundos","Para que serve o Fundo de Compensação de Benefícios Fiscais?","Compensar, de 2029 a 2032, quem tinha benefícios fiscais ou financeiro-fiscais de ICMS.<br>Aportes de R$ 8 bilhões em 2025, até R$ 32 bilhões em 2028 e 2029, caindo a R$ 8 bilhões em 2032.","EC 132, art. 12"],
+["Fundos","O que é o Fundo Nacional de Desenvolvimento Regional?","Recursos da União a Estados e DF para reduzir desigualdades regionais e sociais: infraestrutura, fomento produtivo e ciência e tecnologia.<br>Rateio: 30% população e 70% coeficiente do FPE. O TCU calcula.","CF, art. 159-A"],
+["Fundos","Quanto a União entrega ao Fundo Nacional de Desenvolvimento Regional?","Começa com R$ 8 bilhões em 2029 e sobe até R$ 60 bilhões por ano a partir de 2043.","EC 132, art. 13"],
+["Tributos locais","ITCMD sobre bens móveis na herança: qual Estado cobra?","O Estado onde era domiciliado o falecido (de cujus).<br>Na doação, o do domicílio do doador.","CF, art. 155, § 1º, II"],
+["Tributos locais","O ITCMD passou a ser progressivo em razão de quê?","Do valor do quinhão, do legado ou da doação.","CF, art. 155, § 1º, VI"],
+["Tributos locais","Sobre quais transmissões o ITCMD não incide?","Transmissões e doações para instituições sem fins lucrativos de relevância pública e social, inclusive organizações assistenciais e beneficentes de entidades religiosas e institutos científicos e tecnológicos.","CF, art. 155, § 1º, VII"],
+["Tributos locais","O IPVA passou a incidir sobre quais veículos?","Terrestres, aquáticos e aéreos.<br>Exceções: aeronaves agrícolas e de serviço a terceiros, embarcações de transporte aquaviário e de pesca, plataformas e tratores e máquinas agrícolas.","CF, art. 155, § 6º, III"],
+["Tributos locais","O IPVA pode ter alíquotas diferenciadas em função de quê?","Do tipo, do valor, da utilização e do impacto ambiental.","CF, art. 155, § 6º, II"],
+["Tributos locais","Como o IPTU pode ter a base de cálculo atualizada?","Pelo Poder Executivo, conforme critérios estabelecidos em lei municipal.","CF, art. 156, § 1º, III"],
+["Tributos locais","O que a COSIP passou a custear além da iluminação pública?","Sistemas de monitoramento para segurança e preservação de logradouros públicos.","CF, art. 149-A"],
+["Princípios","Quais princípios o Sistema Tributário Nacional passou a observar?","Simplicidade, transparência, justiça tributária, cooperação e defesa do meio ambiente.<br>E as alterações devem buscar atenuar efeitos regressivos.","CF, art. 145, §§ 3º e 4º"]
+]
+;
+let ordem = cartoes.map((_,i)=>i), pos = 0;
+const $ = id => document.getElementById(id);
+function mostra(){
+  const c = cartoes[ordem[pos]];
+  $("contador").textContent = `Cartão ${pos+1} de ${cartoes.length}`;
+  $("tema").textContent = c[0];
+  $("pergunta").innerHTML = c[1];
+  $("resposta").innerHTML = `<div class="rotulo r">Resposta</div>${c[2]}<span class="fonte">${c[3]}</span>`;
+  $("resposta").classList.remove("mostrar");
+  $("ver").textContent = "Ver resposta";
+}
+$("ver").onclick = () => { const r=$("resposta"); r.classList.toggle("mostrar"); $("ver").textContent = r.classList.contains("mostrar") ? "Esconder" : "Ver resposta"; };
+$("prox").onclick = () => { pos = (pos+1) % cartoes.length; mostra(); };
+$("ant").onclick = () => { pos = (pos-1+cartoes.length) % cartoes.length; mostra(); };
+$("emb").onclick = () => { for(let i=ordem.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [ordem[i],ordem[j]]=[ordem[j],ordem[i]];} pos=0; mostra(); };
+document.addEventListener("keydown", e => { if(e.key==="ArrowRight") $("prox").click(); else if(e.key==="ArrowLeft") $("ant").click(); else if(e.key===" "){ e.preventDefault(); $("ver").click(); } });
+mostra();
+</script>
+</body>
+</html>
