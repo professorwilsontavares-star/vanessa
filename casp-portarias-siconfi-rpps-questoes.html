@@ -41,7 +41,13 @@ button.sec{background:var(--card);color:var(--text);border:1px solid var(--line)
 .chute{display:flex;align-items:center;gap:8px;margin:2px 0 8px;color:var(--muted);font-size:.93rem;cursor:pointer;user-select:none}
 .chute input{width:17px;height:17px;accent-color:var(--accent);cursor:pointer}
 .tag.ch{border-color:#c2410c;color:#c2410c}
-.voltar{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:50;background:#1d4e89;color:#fff;text-decoration:none;font-weight:600;border-radius:999px;padding:8px 20px;box-shadow:0 4px 14px rgba(0,0,0,.18);font-family:"Segoe UI",system-ui,sans-serif} .wrap{padding-top:58px} .rev a{color:var(--accent);font-weight:600}</style>
+.voltar{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:50;background:#1d4e89;color:#fff;text-decoration:none;font-weight:600;border-radius:999px;padding:8px 20px;box-shadow:0 4px 14px rgba(0,0,0,.18);font-family:"Segoe UI",system-ui,sans-serif} .wrap{padding-top:58px} .rev a{color:var(--accent);font-weight:600}
+/* barra abaixo do Voltar e filtros numa linha rolavel (celular) */
+.bar{top:0;padding-top:56px}
+.score{order:1}.theme{order:2}
+#filtros{order:3;display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;width:100%;padding-bottom:2px;scrollbar-width:thin}
+#filtros .chip{flex:0 0 auto;white-space:nowrap}
+</style>
 </head>
 <body>
 <a class="voltar" href="index.html">&larr; Voltar</a><div class="wrap">
