@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Certo ou Errado: NBC TSP 34</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--text:#1d2330;--muted:#5d6675;--line:#dfe3ea;--accent:#1f4e9c;--accent-soft:#e8eefa;--ok:#1d7a46;--ok-soft:#e3f4ea;--bad:#b3261e;--bad-soft:#fbe7e5;--note:#fff6dc;--note-line:#e8c35a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151b;--card:#1b2029;--text:#e6e9ef;--muted:#9aa3b2;--line:#2c3340;--accent:#7fa6ea;--accent-soft:#1f2a3d;--ok:#5fcf8f;--ok-soft:#173226;--bad:#f08a82;--bad-soft:#3a1d1b;--note:#2d2716;--note-line:#8a7430}}
+:root[data-theme="dark"]{--bg:#12151b;--card:#1b2029;--text:#e6e9ef;--muted:#9aa3b2;--line:#2c3340;--accent:#7fa6ea;--accent-soft:#1f2a3d;--ok:#5fcf8f;--ok-soft:#173226;--bad:#f08a82;--bad-soft:#3a1d1b;--note:#2d2716;--note-line:#8a7430}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 "Segoe UI",system-ui,-apple-system,sans-serif}
+.wrap{max-width:840px;margin:0 auto;padding:20px 16px 80px}
+header h1{font-size:1.45rem;margin:0 0 4px}
+header p{margin:0;color:var(--muted);font-size:.93rem}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0;margin:14px 0 6px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.score{font-weight:600;margin-right:auto}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;padding:5px 12px;font-size:.85rem;cursor:pointer}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 18px 14px;margin:16px 0}
+.qh{display:flex;gap:10px;align-items:baseline;margin-bottom:8px;flex-wrap:wrap}
+.num{font-weight:700;color:var(--accent)}
+.tag{font-size:.78rem;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 8px}
+.en{margin:0 0 12px}
+.alt{display:flex;gap:10px;width:100%;text-align:left;background:transparent;border:1px solid var(--line);border-radius:9px;padding:9px 12px;margin:7px 0;color:var(--text);font:inherit;cursor:pointer}
+.alt:hover:not([disabled]){background:var(--accent-soft)}
+.alt b{min-width:1.4em}
+.alt[disabled]{cursor:default}
+.alt.certa{background:var(--ok-soft);border-color:var(--ok)}
+.alt.errada{background:var(--bad-soft);border-color:var(--bad)}
+.res{display:none;margin-top:12px;border-top:1px dashed var(--line);padding-top:12px}
+.res.show{display:block}
+.veredito{font-weight:700;margin-bottom:6px}
+.veredito.ok{color:var(--ok)}.veredito.no{color:var(--bad)}
+.rev{margin-top:10px;background:var(--note);border-left:4px solid var(--note-line);padding:8px 12px;border-radius:6px;font-size:.9rem}
+.rev code{font-family:Consolas,monospace;background:transparent;font-weight:600}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+button.main{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:9px 16px;font:inherit;cursor:pointer}
+button.sec{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px 16px;font:inherit;cursor:pointer}
+.theme{margin-left:4px}
+.alts-ce{display:flex;gap:10px} .alt.ce{justify-content:center;font-weight:600;flex:1}
+.chute{display:flex;align-items:center;gap:8px;margin:2px 0 8px;color:var(--muted);font-size:.93rem;cursor:pointer;user-select:none}
+.chute input{width:17px;height:17px;accent-color:var(--accent);cursor:pointer}
+.tag.ch{border-color:#c2410c;color:#c2410c}
+.voltar{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:50;background:#1d4e89;color:#fff;text-decoration:none;font-weight:600;border-radius:999px;padding:8px 20px;box-shadow:0 4px 14px rgba(0,0,0,.18);font-family:"Segoe UI",system-ui,sans-serif} .wrap{padding-top:58px} .rev a{color:var(--accent);font-weight:600}</style>
+</head>
+<body>
+<a class="voltar" href="index.html">&larr; Voltar</a><div class="wrap">
+<header>
+<h1>Certo ou Errado: NBC TSP 34 (Custos no Setor Público)</h1>
+<p>50 itens inéditos para julgar como Certo ou Errado, seguindo os itens do edital da SEFAZ-SC. Marque "Vou responder no chute" quando for chutar. O comentário mostra o item da norma e onde revisar no resumo.</p>
+</header>
+<div class="bar">
+<span class="score" id="score">0 respondidas</span>
+<span id="filtros"></span>
+<button class="chip theme" id="themeBtn" title="Alternar tema claro/escuro">◐</button>
+</div>
+<div id="lista"></div>
+<div class="actions">
+<button class="main" id="mostrar">Mostrar todos os gabaritos</button>
+<button class="sec" id="refazer">Refazer do zero</button>
+</div>
+</div>
+<script>
+const QUESTOES = [
+{t:"Conceitos, objetos e centros", e:"A NBC TSP 34 trata principalmente do uso da informação de custos para fins gerenciais.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 4", k:"fins gerenciais", x:"CERTO. É a literalidade do item 4. A norma se aplica às entidades do setor público (item 3) e tem foco gerencial, não na elaboração das demonstrações contábeis."},
+{t:"Conceitos, objetos e centros", e:"Segundo a NBC TSP 34, custo é o dispêndio de um ativo ou a criação de um passivo, estando ou não relacionado à obtenção de um bem ou serviço.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 5", k:"Consumo ou utilização de recursos para a geração de bens ou serviços", x:"ERRADO. O item descreve GASTO. Custo é o consumo ou utilização de recursos para a geração de bens ou serviços (item 5). A banca troca os conceitos vizinhos: gasto, custo, desembolso, investimento e perda."},
+{t:"Conceitos, objetos e centros", e:"Perda é o consumo ou utilização de recursos de forma anormal e imprevisível, que não contribui para a geração de bens e serviços; por isso, perdas por redução ao valor recuperável não devem ser consideradas custos.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, itens 5 e 22", k:"Perdas não são custos", x:"CERTO. Definição de perda do item 5 combinada com o item 22: perdas por redução ao valor recuperável, indenizações e catástrofes não são atribuídas aos objetos de custo."},
+{t:"Conceitos, objetos e centros", e:"Para a NBC TSP 34, somente insumos com forma física podem ser considerados recursos, razão pela qual a força de trabalho não integra o custo dos serviços.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 5 (recursos)", k:"forma física não é condição necessária", x:"ERRADO. A norma diz que a forma física NÃO é condição necessária para um recurso e cita como exemplos força de trabalho, serviços de terceiros e recursos financeiros (item 5)."},
+{t:"Conceitos, objetos e centros", e:"Os principais usuários da informação de custos são os órgãos de controle e os cidadãos, que em regra demandam informações customizadas, no formato de relatórios de custos específicos.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, itens 7 a 9", k:"Informações customizadas", x:"ERRADO. Os principais usuários são os GESTORES, que demandam informações customizadas (item 7). Órgãos de controle e cidadãos são demais usuários e, em geral, pedem informações gerais, agregadas, consolidadas e padronizadas (item 9)."},
+{t:"Conceitos, objetos e centros", e:"Considerando a relevância, combinada com as restrições de materialidade e de custo-benefício, a entidade pode apropriar imediatamente como custo bens de baixo valor, em vez de depreciá-los por diversos períodos.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 12", k:"podem ser apropriados", x:"CERTO. É o exemplo do item 12. As características qualitativas e as restrições (materialidade e custo-benefício) justificam o tratamento simplificado."},
+{t:"Conceitos, objetos e centros", e:"Os programas elencados nos planos de governo são exemplos de objetos de custos finais, pois evidenciam o custo da atuação governamental perante a sociedade.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, itens 50 e 51", k:"objeto de custo intermediário", x:"ERRADO. Programas de governo são objetos de custo INTERMEDIÁRIOS (item 51, c). Finais são os bens e serviços entregues à sociedade, como saúde, educação e segurança (item 50)."},
+{t:"Conceitos, objetos e centros", e:"A quantidade de objetos de custos influencia o nível de granularidade e de complexidade do modelo de gerenciamento de custos.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, itens 5 e 49", k:"granularidade e a complexidade", x:"CERTO. Literal da definição de objeto de custo (item 5) e do item 49."},
+{t:"Conceitos, objetos e centros", e:"A definição e a estruturação dos centros de responsabilidade cabem ao profissional da contabilidade, que deve considerar como fator predominante o volume de recursos orçamentários de cada unidade.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, itens 28 e 29", k:"Quem define e estrutura", x:"ERRADO. Quem define e estrutura os centros é a ALTA ADMINISTRAÇÃO (item 28), e o fator predominante é a ESTRUTURA ORGANIZACIONAL e suas unidades (item 29)."},
+{t:"Conceitos, objetos e centros", e:"A entidade que produz um único tipo de bem ou serviço pode ter somente um centro de responsabilidade.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 31", k:"um só centro", x:"CERTO. Item 31. O usual, porém, é ter vários centros, pela segregação de funções e competências."},
+{t:"Direcionadores", e:"Direcionador de custo é o indicador que permite estabelecer a relação de causa e efeito para alocação dos custos indiretos.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 5", k:"relação de causa e efeito", x:"CERTO. Definição literal do item 5."},
+{t:"Direcionadores", e:"Na atribuição dos custos, a entidade deve, em primeiro lugar, alocar os custos indiretos por bases de rateio e, somente depois, apropriar os custos diretos aos objetos de custos.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 54", k:"Ordem de atribuição dos custos", x:"ERRADO. A ordem do item 54 é: (a) apropriação dos custos diretos; (b) alocação dos indiretos por direcionadores (rastreamento); (c) alocação dos indiretos remanescentes por bases de rateio razoáveis e consistentes."},
+{t:"Direcionadores", e:"A área ocupada pelos departamentos, o tempo consumido no processo produtivo e as unidades produzidas são exemplos de direcionadores e bases de rateio, que podem ser aplicados de forma combinada.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 55", k:"Podem ser", x:"CERTO. O item 55 lista, entre outros, tempo consumido, mão de obra direta, área ocupada, material consumido e unidades produzidas, admitindo a combinação."},
+{t:"Direcionadores", e:"Ainda que arbitrária, a alocação de custos indiretos é obrigatória sempre que a entidade adotar o custeio por absorção.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 57", k:"deve ser dispensada", x:"ERRADO. A alocação de indiretos deve ser DISPENSADA quando for arbitrária e a informação não atender às características qualitativas e às restrições (item 57)."},
+{t:"Direcionadores", e:"Os recursos consumidos devem ser atribuídos aos objetos de custos mesmo que a entidade beneficiada não seja a responsável pelo desembolso, como no caso de servidores ou prédios cedidos.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 58", k:"que não geram desembolso", x:"CERTO. Item 58: o objetivo é representar com fidedignidade o custo dos recursos efetivamente consumidos. Exemplos: doações, trabalho de estudantes em hospital universitário, servidores e prédios cedidos."},
+{t:"Diretos, indiretos, fixos e variáveis", e:"Custo indireto é aquele que não pode ser identificado e apropriado direta e objetivamente ao objeto de custo, devendo sua alocação ocorrer por meio de direcionadores de custos ou, em última instância, de bases de rateio razoáveis e consistentes.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 5", k:"Não pode ser identificado e apropriado direta e objetivamente", x:"CERTO. Definição literal de custo indireto (item 5). Note a ordem: direcionador primeiro, rateio em última instância."},
+{t:"Diretos, indiretos, fixos e variáveis", e:"Custo fixo é aquele que oscila de forma proporcional ao volume das atividades desenvolvidas, geralmente representado pela quantidade produzida de bens ou serviços.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 5", k:"intervalo relevante", x:"ERRADO. O item descreve o custo VARIÁVEL. Custo fixo é o que não varia na proporção do volume das atividades, mantendo-se constante em intervalo relevante (item 5)."},
+{t:"Diretos, indiretos, fixos e variáveis", e:"Custos de suporte são os custos correspondentes a atividades diretamente relacionadas ao cumprimento da missão institucional e à geração de valor público.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 5", k:"De atividades que dão suporte às finalísticas", x:"ERRADO. Essa é a definição de custos FINALÍSTICOS. Custos de suporte são os relativos a atividades que dão suporte à realização das atividades finalísticas (item 5)."},
+{t:"Diretos, indiretos, fixos e variáveis", e:"Custo não controlável representa a utilização de recursos que não pode ter seu controle atribuído a um gestor de determinado nível hierárquico.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 5", k:"Não pode ter seu controle atribuído", x:"CERTO. Definição literal do item 5. O custo controlável é aquele em que o gestor exerce influência sobre o consumo e o desempenho esperado."},
+{t:"Diretos, indiretos, fixos e variáveis", e:"A NBC TSP 34 estabelece rol taxativo de classificações de custos, limitado a direto e indireto e a fixo e variável.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 53", k:"depende dos objetivos da informação", x:"ERRADO. O item 53 cita classificações FREQUENTEMENTE utilizadas (direto e indireto; fixo e variável; finalístico e de suporte; controlável e não controlável), e a classificação depende dos objetivos da informação. Não há rol taxativo."},
+{t:"Diretos, indiretos, fixos e variáveis", e:"As classificações de custo, além de dependerem dos objetos de custo escolhidos, também são afetadas pelo custo da coleta de dados e pela viabilidade da atribuição de custos.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 52", k:"custo da coleta de dados", x:"CERTO. Literal do item 52."},
+{t:"Métodos de custeio", e:"Os principais métodos de custeio previstos na NBC TSP 34 são o direto, o variável, o por absorção parcial e o por absorção integral, também chamado de custeio pleno.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 5", k:"Os principais métodos de custeio são", x:"CERTO. Definição de método de custeio no item 5."},
+{t:"Métodos de custeio", e:"Em estágios iniciais, com menor grau de maturidade do modelo de gerenciamento de custos, a norma recomenda o custeio por absorção integral, por atribuir todos os custos aos objetos.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 37", k:"Estágio inicial", x:"ERRADO. No estágio inicial recomenda-se o custeio DIRETO, que atribui apenas os custos diretos (item 37). A absorção parcial ou integral é recomendada quando atribuir os indiretos for relevante."},
+{t:"Métodos de custeio", e:"A NBC TSP 34 obriga as entidades com maior grau de maturidade a adotar o custeio baseado em atividades (ABC) para rastrear os custos indiretos até as entregas.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, itens 38 e 39", k:"encoraja, mas não obriga", x:"ERRADO. A norma ENCORAJA, MAS NÃO OBRIGA, que essas entidades avaliem o custo-benefício do ABC; a avaliação é desnecessária quando a atribuição dos indiretos não for relevante (item 39). O ABC é uma técnica que pode operacionalizar a absorção parcial e a integral (item 38)."},
+{t:"Métodos de custeio", e:"Uma vez adotado, o método de custeio deve ser utilizado de forma consistente, o que não impede sua alteração para refinamento do modelo, desde que os efeitos da mudança sejam documentados e explicados.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 36", k:"desde que os efeitos sejam documentados e explicados", x:"CERTO. Item 36: consistência para comparabilidade intertemporal, sem afastar refinamentos, com documentação e explicação dos efeitos."},
+{t:"Métodos de custeio", e:"Na comparação entre entidades que incida sobre a mensuração do objeto de custo final, recomenda-se o custeio por absorção integral, para não subestimar os insumos consumidos.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 42, a", k:"absorção integral (pleno)", x:"CERTO. Item 42, a. Assim os custos comparáveis incluem todos os custos, finalísticos e de suporte. Para objetos intermediários, a escolha do método é discricionária (item 42, b)."},
+{t:"Métodos de custeio", e:"O sistema de acumulação por ordem de serviço ou produção é o mais adequado às demandas de caráter continuado, acumuladas período a período, como a manutenção de escolas.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 5", k:"obras e benfeitorias", x:"ERRADO. Demandas continuadas, acumuladas período a período, usam o sistema de acumulação CONTÍNUA. A ordem de serviço ou produção tem especificações predeterminadas e tempo limitado, sendo mais adequada a investimentos e projetos específicos, como obras e benfeitorias (item 5)."},
+{t:"Métodos de custeio", e:"A seleção do método de custeio cabe à administração da entidade ou de suas unidades, que está na melhor posição para escolher o método que melhor se ajusta às suas necessidades.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 35", k:"Seleciona o método de custeio", x:"CERTO. Literal do item 35."},
+{t:"Sistema de custos e responsabilidades", e:"O sistema de custos compreende o modelo de gerenciamento de custos, o sistema de informação de custos e a definição de funções e responsabilidades organizacionais.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 5", k:"Sistema de custos compreende", x:"CERTO. Definição do item 5. São três componentes, e o objetivo é gerar informações de custos como instrumento de governança pública."},
+{t:"Sistema de custos e responsabilidades", e:"A adoção de sistema de custos é facultativa, cabendo a cada entidade decidir se identificará, acumulará e relatará os custos de seus objetos.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 24", k:"Obrigatoriedade (item 24):", x:"ERRADO. Item 24: cada entidade DEVE identificar, acumular e relatar os custos de seus objetos em uma base regular, por meio de sistema de custos."},
+{t:"Sistema de custos e responsabilidades", e:"A geração das informações de custo é atribuição do profissional da contabilidade, mas a integridade e a fidedignidade das informações extraídas das bases de dados de origem são de responsabilidade dos gestores das transações registradas nos sistemas integrados.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 66", k:"Gestores das transações", x:"CERTO. Literal do item 66. É o ponto mais cobrado em funções e responsabilidades."},
+{t:"Sistema de custos e responsabilidades", e:"Cabe ao profissional da contabilidade responsabilizar os gestores pela qualidade dos dados e pelo uso das informações de custos nos processos decisórios.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 78", k:"responsabiliza os gestores", x:"ERRADO. Essa responsabilidade é da ALTA ADMINISTRAÇÃO, que deve prover efetivo apoio à geração da informação de custos e responsabilizar os gestores (item 78)."},
+{t:"Sistema de custos e responsabilidades", e:"Entre os objetivos do sistema de custos está direcionar políticas de contingenciamento do gasto público com o objetivo de minimizar seus impactos nas ações governamentais.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 15, h", k:"direcionar políticas de contingenciamento", x:"CERTO. Item 15, h. Outros objetivos: comparar custos com entidades públicas ou privadas, subsidiar decisões de comprar ou alugar e terceirizar, apoiar planejamento e orçamento, entre outros."},
+{t:"Sistema de custos e responsabilidades", e:"Para garantir a confiabilidade, a informação de custos deve buscar o máximo de exatidão e de refinamento dos dados, independentemente do custo de obtê-los.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 25", k:"evitando exatidão e refinamentos desnecessários", x:"ERRADO. O item 25 diz que exatidão e refinamentos desnecessários dos dados devem ser EVITADOS. A restrição de custo-benefício também se aplica (item 11)."},
+{t:"Modelo de gerenciamento", e:"O modelo de gerenciamento de custos consiste no conjunto de diretrizes, escopo de aplicação, objetos de custo, sistema de acumulação, método de custeio e bases de mensuração necessários ao gerenciamento de custos.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 5", k:"conjunto de diretrizes, escopo de aplicação", x:"CERTO. Definição literal do item 5."},
+{t:"Modelo de gerenciamento", e:"Na etapa de implantação do modelo de gerenciamento de custos, a alta administração define os centros de responsabilidade e os objetos de custos e explicita a principal finalidade do modelo.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 47, a", k:"(a) Planejamento", x:"ERRADO. Isso ocorre na etapa de PLANEJAMENTO (item 47, a). A implantação é viabilizada pela capacitação da equipe e divulgação do modelo, com boa prática de projeto piloto (item 47, c)."},
+{t:"Modelo de gerenciamento", e:"Na etapa de estruturação, a entidade escolhe o sistema de acumulação, o método de custeio e as bases de mensuração e mapeia os dados de entrada do sistema de informação de custos.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 47, b", k:"(b) Estruturação", x:"CERTO. Item 47, b. O objetivo dessa etapa é identificar e segregar os custos a serem mensurados."},
+{t:"Modelo de gerenciamento", e:"Como boa prática na etapa de planejamento, a norma recomenda a utilização de projeto piloto para implementação gradual do modelo na entidade.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 47, a e c", k:"Projeto piloto", x:"ERRADO. Projeto piloto é a boa prática da etapa de IMPLANTAÇÃO (item 47, c). No planejamento, a boa prática é o benchmarking em outras entidades (item 47, a)."},
+{t:"Modelo de gerenciamento", e:"No planejamento do modelo, a alta administração dotará formalmente a equipe responsável com poder de decisão e com dedicação exclusiva.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 47, a", k:"poder de decisão e dedicação exclusiva", x:"CERTO. Item 47, a, que também exige apoio ativo da alta administração."},
+{t:"Sistema de informação de custos", e:"O sistema de informação de custos é o conjunto de elementos estruturados que registra, processa e evidencia os custos de bens e serviços e demais objetos de custos.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 5", k:"registra, processa e evidencia", x:"CERTO. Definição literal do item 5."},
+{t:"Sistema de informação de custos", e:"Por exigência de rastreabilidade, a NBC TSP 34 veda a utilização de procedimentos manuais e de planilhas eletrônicas para alimentar o sistema de informação de custos.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 60", k:"planilhas eletrônicas", x:"ERRADO. Nada impede procedimentos manuais e bases simplificadas, como planilhas eletrônicas, desde que garantidas a conformidade e a rastreabilidade dos dados (item 60)."},
+{t:"Sistema de informação de custos", e:"É recomendável utilizar o sistema de folha de pagamento para extrair informações de custos e quantitativo de pessoal, e o sistema de gestão do patrimônio para extrair informações de consumo de material e depreciação.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 59", k:"gestão do patrimônio", x:"CERTO. Exemplo do item 59, que trata da integração das bases de dados."},
+{t:"Sistema de informação de custos", e:"A geração da informação física pelas bases de dados da entidade é requisito indispensável para a existência do sistema de informação de custos.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 61", k:"mas não restritivo", x:"ERRADO. É relevante, MAS NÃO RESTRITIVO, que as bases gerem a informação física, que permite o custo unitário e ajuda nos indicadores de desempenho (item 61)."},
+{t:"Implantação", e:"O processo de implantação do modelo de gerenciamento de custos deve ser sistemático e gradual, considerando, entre outros aspectos, os critérios de transparência e controle social.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 63", k:"sistemática e gradual", x:"CERTO. Item 63, que também manda considerar a estrutura e os objetivos organizacionais e os processos decisórios de cada grupo de usuários."},
+{t:"Implantação", e:"O pequeno porte da entidade e a existência de base de dados simplificada justificam a ausência de iniciativas de desenvolvimento do modelo de gerenciamento de custos.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 65", k:"não justifica a ausência", x:"ERRADO. O porte da entidade ou a base simplificada NÃO é justificativa para a ausência de iniciativas, nem impede a evolução do modelo e do sistema ao longo do tempo (item 65)."},
+{t:"Implantação", e:"A implantação do sistema de informação de custos deve considerar, entre outros aspectos, a estimativa do seu custo de instalação, treinamento, operação e manutenção.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 64", k:"estimativa do custo", x:"CERTO. Item 64, junto com a definição dos sistemas a integrar, a viabilidade prática da compilação dos dados e a disponibilidade de ferramentas."},
+{t:"Integração das informações", e:"O custo do período deve ser apurado pelo regime de competência, independentemente da execução orçamentária, sendo determinado pelo momento do consumo, que equivale ao fato gerador contábil.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 23", k:"independentemente da execução orçamentária", x:"CERTO. Literal do item 23. O custo não nasce da liquidação nem do pagamento, e sim do consumo."},
+{t:"Integração das informações", e:"A apropriação mensal do 13º salário, a depreciação e o consumo de material em estoque são exemplos de recursos consumidos decorrentes da execução orçamentária, em que o fato gerador coincide com o momento da liquidação.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 23", k:"Execução não orçamentária", x:"ERRADO. Esses são exemplos de execução NÃO orçamentária, em que o fato gerador ocorre em momento distinto da liquidação. Os exemplos de fato gerador coincidente com a liquidação são material de consumo imediato e prestação de serviços (item 23)."},
+{t:"Uso da informação de custos", e:"A divulgação de relatório de custos em base regular é recomendável, com periodicidade mínima anual, contendo análise e interpretação do consumo dos recursos e explicações de eventuais variações.", a:["Certo","Errado"], c:0, d:"NBC TSP 34, item 70", k:"mínima anual", x:"CERTO. Item 70. Relatórios específicos definidos pelos gestores podem ser divulgados conforme conveniência e oportunidade (item 71)."},
+{t:"Uso da informação de custos", e:"A gestão de custos no setor público é voltada à administração dos insumos, com ênfase na maximização da arrecadação, e à identificação das entregas, com ênfase no controle orçamentário.", a:["Certo","Errado"], c:1, d:"NBC TSP 34, item 74", k:"melhoria da alocação dos recursos", x:"ERRADO. Item 74: administração dos insumos com ênfase na MELHORIA DA ALOCAÇÃO DOS RECURSOS, e identificação e mensuração das entregas com ênfase na AVALIAÇÃO DE DESEMPENHO."}
+];
+
+const PAGINAS={"fins gerenciais":1,"Consumo ou utilização de recursos para a geração de bens ou serviços":3,"Perdas não são custos":4,"forma física não é condição necessária":3,"Informações customizadas":4,"podem ser apropriados":4,"objeto de custo intermediário":4,"granularidade e a complexidade":4,"Quem define e estrutura":4,"um só centro":5,"relação de causa e efeito":6,"Ordem de atribuição dos custos":6,"Podem ser":4,"deve ser dispensada":6,"que não geram desembolso":6,"Não pode ser identificado e apropriado direta e objetivamente":7,"intervalo relevante":7,"De atividades que dão suporte às finalísticas":7,"Não pode ter seu controle atribuído":7,"depende dos objetivos da informação":7,"custo da coleta de dados":7,"Os principais métodos de custeio são":8,"Estágio inicial":8,"encoraja, mas não obriga":8,"desde que os efeitos sejam documentados e explicados":8,"absorção integral (pleno)":8,"obras e benfeitorias":8,"Seleciona o método de custeio":9,"Sistema de custos compreende":9,"Obrigatoriedade (item 24):":9,"Gestores das transações":9,"responsabiliza os gestores":9,"direcionar políticas de contingenciamento":9,"evitando exatidão e refinamentos desnecessários":9,"conjunto de diretrizes, escopo de aplicação":10,"(a) Planejamento":10,"(b) Estruturação":10,"Projeto piloto":10,"poder de decisão e dedicação exclusiva":9,"registra, processa e evidencia":11,"planilhas eletrônicas":11,"gestão do patrimônio":11,"mas não restritivo":11,"sistemática e gradual":12,"não justifica a ausência":12,"estimativa do custo":12,"independentemente da execução orçamentária":1,"Execução não orçamentária":13,"mínima anual":14,"melhoria da alocação dos recursos":14};
+
+const L = "ABCDE";
+// letra final desejada da correta (FCC distribui o gabarito); null = manter ordem original
+const ALVO = [];
+const Q = QUESTOES.map((q,i)=>{
+  const alvo = ALVO[i]; let rot = 0;
+  if (alvo) rot = (L.indexOf(alvo) - q.c + 5) % 5;
+  const alts = new Array(q.a.length); const mapa = {};
+  q.a.forEach((t,j)=>{ const n=(j+rot)%q.a.length; alts[n]=t; mapa[L[j]]=L[n]; });
+  const x = q.x.replace(/\(([A-E])\)/g,(m,l)=>"("+mapa[l]+")");
+  return {...q, alts, correta:(q.c+rot)%5, x};
+});
+const estado = {}, chutes = {}; let filtro = "Todas";
+function salvar(){ try{ localStorage.setItem("ce-tsp34-v1", JSON.stringify(estado)); localStorage.setItem("ce-tsp34-v1-chute", JSON.stringify(chutes)); }catch(e){} }
+try{ Object.assign(estado, JSON.parse(localStorage.getItem("ce-tsp34-v1")||"{}")); Object.assign(chutes, JSON.parse(localStorage.getItem("ce-tsp34-v1-chute")||"{}")); }catch(e){}
+const temas = ["Todas", ...new Set(Q.map(q=>q.t)), "Não respondidas", "Erradas", "Chutadas"];
+function renderFiltros(){
+  document.getElementById("filtros").innerHTML = temas.map(t=>`<button class="chip ${t===filtro?"on":""}" data-f="${t}">${t}</button>`).join(" ");
+}
+function render(){
+  const el = document.getElementById("lista"); el.innerHTML = "";
+  Q.forEach((q,i)=>{
+    if (filtro==="Chutadas" ? !chutes[i] : filtro==="Não respondidas" ? estado[i]!==undefined : filtro==="Erradas" ? !(estado[i]!==undefined && estado[i]!==-1 && estado[i]!==q.correta) : (filtro!=="Todas" && q.t!==filtro)) return;
+    const esc = estado[i]; const resp = esc!==undefined;
+    const pag = (typeof PAGINAS!=="undefined" && PAGINAS[q.k]) ? PAGINAS[q.k] : null;
+    const d = document.createElement("div"); d.className="q";
+    d.innerHTML = `<div class="qh"><span class="num">Q ${String(i+1).padStart(2,"0")}</span><span class="tag">${q.t}</span><span class="tag">FCC · inédita</span>${chutes[i]&&resp?`<span class="tag ch">no chute</span>`:""}</div>
+      <p class="en">${q.e}</p>
+      <label class="chute"><input type="checkbox" data-chute="${i}" ${chutes[i]?"checked":""} ${resp?"disabled":""}> Vou responder no chute</label>
+      <div class="alts-ce">${q.alts.map((t,j)=>{ let c=""; if(resp){ if(j===q.correta)c="certa"; else if(j===esc)c="errada"; }
+        return `<button class="alt ce ${c}" data-q="${i}" data-a="${j}" ${resp?"disabled":""}><span>${j===0?"&#10003;":"&#10007;"} ${t}</span></button>`; }).join("")}</div>
+      <div class="res ${resp?"show":""}">
+        ${esc===-1?`<div class="veredito">Gabarito: ${q.alts[q.correta]}</div>`:`<div class="veredito ${esc===q.correta?"ok":"no"}">${esc===q.correta?"Acertou":"Errou"}. Gabarito: ${q.alts[q.correta]}</div>`}
+        <div>${q.x}</div>
+        <div class="rev">${q.d?`<b>${q.d}</b>. `:""}<a href="casp-tsp34-resumo.html#:~:text=${encodeURIComponent(q.k)}" target="_blank" rel="noopener">Abrir no resumo</a>${pag?` (página ${pag} no Word)`:""}. Ctrl+F: <code>${q.k}</code></div>
+      </div>`;
+    el.appendChild(d);
+  });
+  const feitas = Object.keys(estado).filter(k=>estado[k]!==-1);
+  const certas = feitas.filter(k=>estado[k]===Q[k].correta).length;
+  const ch = feitas.filter(k=>chutes[k]); const chC = ch.filter(k=>estado[k]===Q[k].correta).length;
+  document.getElementById("score").textContent = `${feitas.length} de ${Q.length} respondidas · ${certas} acertos` + (feitas.length?` (${Math.round(100*certas/feitas.length)}%)`:"") + (ch.length?` · ${ch.length} no chute (${chC} acertos)`:"");
+}
+document.addEventListener("click",e=>{
+  const cb = e.target.closest("[data-chute]"); if (cb){ const i=+cb.dataset.chute; if(cb.checked) chutes[i]=1; else delete chutes[i]; salvar(); return; }
+  const a = e.target.closest(".alt"); if (a && !a.disabled){ estado[+a.dataset.q] = +a.dataset.a; salvar(); render(); return; }
+  const f = e.target.closest("[data-f]"); if (f){ filtro=f.dataset.f; renderFiltros(); render(); }
+});
+document.getElementById("mostrar").onclick=()=>{ Q.forEach((q,i)=>{ if(estado[i]===undefined) estado[i]=-1; }); salvar(); render(); };
+document.getElementById("refazer").onclick=()=>{ for(const k in estado) delete estado[k]; for(const k in chutes) delete chutes[k]; salvar(); render(); window.scrollTo(0,0); };
+document.getElementById("themeBtn").onclick=()=>{ const r=document.documentElement; const dark = r.dataset.theme ? r.dataset.theme==="dark" : matchMedia("(prefers-color-scheme: dark)").matches; r.dataset.theme = dark?"light":"dark"; };
+renderFiltros(); render();
+</script>
+</body>
+</html>
