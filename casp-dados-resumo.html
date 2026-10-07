@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Resumo: Ciência e Análise de Dados</title><style>:root{--bg:#f4f7fb;--card:#fff;--text:#1d2330;--muted:#5d6675;--line:#d6deea;--accent:#0369a1;--soft:#e0f0fa;--lei:#f1f3f6;--nota:#fff6dc;--nota-l:#e8c35a;--box:#fbe9e2;--box-l:#c55a11}
+@media (prefers-color-scheme:dark){:root{--bg:#12151b;--card:#1b2029;--text:#e6e9ef;--muted:#9aa3b2;--line:#2c3340;--accent:#7cc4f0;--soft:#1f2a3d;--lei:#20252f;--nota:#2d2716;--nota-l:#8a7430;--box:#35231c;--box-l:#b8663a}}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Segoe UI",system-ui,-apple-system,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:62px 16px 70px}
+h1{font-size:1.45rem;color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:4px;margin:34px 0 10px}
+h2{font-size:1.18rem;color:var(--accent);margin:24px 0 8px} h3{font-size:1.05rem;margin:18px 0 6px}
+.capa{text-align:center} .capa p{margin:4px 0}
+.topo{background:var(--card);border:3px solid var(--accent);border-radius:16px;padding:14px 18px;margin:18px 0}
+.topo b.t{display:block;color:var(--accent);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+nav.sum{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 16px;margin:14px 0}
+nav.sum a{display:block;color:var(--text);text-decoration:none;padding:2px 0} nav.sum a.n2{padding-left:18px;color:var(--muted);font-size:.93rem}
+.tab{overflow-x:auto} table{border-collapse:collapse;width:100%;margin:6px 0 12px;background:var(--card);font-size:.93rem}
+th{background:var(--soft);text-align:left} th,td{border:1px solid var(--line);padding:6px 8px;vertical-align:top}
+.lei{background:var(--lei);border-left:4px solid var(--muted);padding:8px 12px;font-style:italic;margin:8px 0;font-size:.95rem}
+.nota{background:var(--nota);border:1px solid var(--nota-l);border-radius:8px;padding:8px 12px;font-size:.95rem}
+.box{background:var(--box);border:2px solid var(--box-l);border-radius:10px;padding:10px 14px;margin:12px 0}
+p.art{font-weight:700;color:var(--accent);margin-top:16px} p{margin:6px 0} ::target-text{background:#ffe066;color:#000} .voltar{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:50;background:#1d4e89;color:#fff;text-decoration:none;font-weight:600;border-radius:999px;padding:8px 20px;box-shadow:0 4px 14px rgba(0,0,0,.18);font-family:"Segoe UI",system-ui,sans-serif}.voltar:hover{background:#163e6d}</style></head><body><a class="voltar" href="index.html">&larr; Voltar</a><div class="wrap"><p class='capa' style='font-size:22pt;color:#1F3864;font-weight:bold;margin-top:60pt;'>Ciência e Análise de Dados</p><p class='capa' style='font-size:15pt;color:#2E5597;'>Resumo para concurso, do zero, na ordem dos itens do edital</p><p class='capa' style='font-size:12pt;'>SEFAZ-SC 2026 · Auditor Estadual de Finanças Públicas · Banca FCC</p><p class='capa' style='font-size:10pt;color:#595959;'>Montado em 07/10/2026. Começa pela seção "Comece aqui: TI do zero", com os termos técnicos explicados em palavras simples.</p><nav class="sum"><b>Sumário</b><a class="n1" href="#s1">Comece aqui: TI do zero</a><a class="n1" href="#s2">1. Conceitos fundamentais de Ciência de Dados e Análise de Dados aplicados à Administração Pública, controle e finanças</a><a class="n2" href="#s3">1.1 O que é cada coisa</a><a class="n2" href="#s4">1.2 Os quatro tipos de análise (analytics)</a><a class="n2" href="#s5">1.3 Processos de referência</a><a class="n2" href="#s6">1.4 Aplicações na Administração Pública, no controle e nas finanças</a><a class="n1" href="#s7">2. Dados estruturados, semiestruturados e não estruturados</a><a class="n1" href="#s8">3. Coleta, qualidade, tratamento, análise e interpretação de dados</a><a class="n2" href="#s9">3.1 Coleta</a><a class="n2" href="#s10">3.2 Qualidade de dados: as dimensões que mais caem</a><a class="n2" href="#s11">3.3 Tratamento (preparação)</a><a class="n2" href="#s12">3.4 Análise e interpretação</a><a class="n1" href="#s13">4. Identificação de padrões, tendências, correlações e anomalias</a><a class="n1" href="#s14">5. Business Intelligence e Visualização de Dados</a><a class="n2" href="#s15">5.1 Business Intelligence (BI) e analytics</a><a class="n2" href="#s16">5.2 Data mining e web scraping</a><a class="n2" href="#s17">5.3 Indicadores, métricas, relatórios e dashboards</a><a class="n2" href="#s18">5.4 Qual gráfico usar</a><a class="n1" href="#s19">6. Uso de ferramentas analíticas para extração, cruzamento, interpretação e comunicação de informações</a><a class="n1" href="#s20">7. Governo Digital e Inteligência Artificial</a><a class="n2" href="#s21">7.1 Governo Digital, transformação digital e serviços públicos digitais</a><a class="n2" href="#s22">7.2 Inteligência Artificial e aprendizado de máquina</a><a class="n2" href="#s23">7.3 IA generativa e modelos de linguagem de grande porte (LLMs)</a><a class="n1" href="#s24">8. Revisão de véspera</a></nav><div class="topo"><b class="t">O mais importante de todos</b>
+Dado bruto vira <b>informação</b> quando ganha contexto, e informação vira <b>conhecimento</b> quando apoia a decisão. Ciência de dados é o caminho que leva do dado à decisão.<br>
+Quatro perguntas da análise: <b>descritiva</b> (o que aconteceu), <b>diagnóstica</b> (por que aconteceu), <b>preditiva</b> (o que vai acontecer) e <b>prescritiva</b> (o que fazer).<br>
+<b>Correlação não é causalidade.</b> Aprendizado <b>supervisionado</b> usa exemplos com resposta conhecida (rótulo); o <b>não supervisionado</b> procura grupos e padrões sem rótulo.</div>
+
+<p>As seções seguem, na ordem, os itens do edital da SEFAZ-SC 2026 (FCC) para Ciência e Análise de Dados. O edital não indica bibliografia; o resumo traz os conceitos que as bancas cobram, explicados para quem nunca estudou TI, com exemplos do dia a dia da Fazenda.</p>
+
+<h1 id="s1">Comece aqui: TI do zero</h1>
+<p>Antes da matéria, os termos que aparecem o tempo todo. Leia esta parte primeiro; o resto fica fácil.</p>
+<div class="tab"><table>
+<tr><th>Termo</th><th>Em palavras simples</th></tr>
+<tr><td><b>Dado</b></td><td>Um registro solto, sem contexto. Ex.: "15.000". Sozinho não diz nada.</td></tr>
+<tr><td><b>Informação</b></td><td>O dado com contexto. Ex.: "a empresa X recolheu R$ 15.000 de ICMS em março".</td></tr>
+<tr><td><b>Banco de dados</b></td><td>Um "arquivo" organizado no computador, onde os dados ficam guardados para serem consultados. Pense num fichário gigante e bem arrumado.</td></tr>
+<tr><td><b>Tabela</b></td><td>Igual a uma planilha do Excel: <b>linhas</b> (cada contribuinte, cada nota) e <b>colunas</b> (CNPJ, nome, valor).</td></tr>
+<tr><td><b>Chave</b></td><td>A coluna que identifica cada linha sem repetir, como o CPF ou o CNPJ. É por ela que se "cruzam" tabelas diferentes.</td></tr>
+<tr><td><b>SQL</b></td><td>A "língua" usada para fazer perguntas ao banco de dados. Ex.: "me mostre todas as notas acima de R$ 1 milhão".</td></tr>
+<tr><td><b>XML e JSON</b></td><td>Formatos de arquivo de texto com <b>etiquetas</b> que dizem o que é cada informação. O arquivo da NF-e é um XML: &lt;valor&gt;1500&lt;/valor&gt;.</td></tr>
+<tr><td><b>API</b></td><td>Um "balcão de atendimento" entre sistemas: um sistema pede o dado de um jeito padronizado e o outro entrega.</td></tr>
+<tr><td><b>Algoritmo</b></td><td>Uma receita: uma sequência de passos que o computador segue para resolver um problema.</td></tr>
+<tr><td><b>Modelo</b> (em IA)</td><td>O "aprendizado guardado": o resultado de treinar um algoritmo com dados, que depois é usado para prever ou classificar casos novos.</td></tr>
+<tr><td><b>Painel (dashboard)</b></td><td>Uma tela com gráficos e números principais, como o painel do carro: você olha e entende a situação na hora.</td></tr>
+</table></div>
+<p class="nota">Dica de prova: a FCC cobra muito <b>conceito</b> e <b>diferença entre parecidos</b> (estruturado x semiestruturado; preditiva x prescritiva; supervisionado x não supervisionado; drill down x roll up). Foque nessas comparações.</p>
+
+<h1 id="s2">1. Conceitos fundamentais de Ciência de Dados e Análise de Dados aplicados à Administração Pública, controle e finanças</h1>
+<h2 id="s3">1.1 O que é cada coisa</h2>
+<div class="tab"><table>
+<tr><th>Conceito</th><th>Ideia central</th></tr>
+<tr><td><b>Ciência de dados</b></td><td>Área <b>interdisciplinar</b> que une estatística, computação e conhecimento do negócio para extrair conhecimento e valor de dados.</td></tr>
+<tr><td><b>Análise de dados</b></td><td>Processo de inspecionar, limpar, transformar e modelar dados para descobrir informação útil, chegar a conclusões e apoiar a decisão.</td></tr>
+<tr><td><b>Dado, informação, conhecimento</b></td><td>Pirâmide DIKW: <b>dado</b> (fato bruto, sem contexto), <b>informação</b> (dado organizado e com significado), <b>conhecimento</b> (informação interpretada e aplicada), <b>sabedoria</b> (uso do conhecimento para julgar e decidir).</td></tr>
+<tr><td><b>Big Data</b></td><td>Conjuntos de dados grandes e complexos demais para ferramentas tradicionais. Os <b>5 Vs</b>: volume, velocidade, variedade, veracidade e valor.</td></tr>
+</table></div>
+
+<h2 id="s4">1.2 Os quatro tipos de análise (analytics)</h2>
+<div class="tab"><table>
+<tr><th>Tipo</th><th>Pergunta</th><th>Exemplo na Fazenda</th></tr>
+<tr><td><b>Descritiva</b></td><td>O que aconteceu?</td><td>Arrecadação de ICMS por setor no último ano.</td></tr>
+<tr><td><b>Diagnóstica</b></td><td>Por que aconteceu?</td><td>Por que a arrecadação do setor X caiu em março.</td></tr>
+<tr><td><b>Preditiva</b></td><td>O que vai acontecer?</td><td>Previsão de arrecadação para o próximo trimestre.</td></tr>
+<tr><td><b>Prescritiva</b></td><td>O que devemos fazer?</td><td>Quais contribuintes priorizar na fiscalização.</td></tr>
+</table></div>
+<p class="nota">Pegadinha: a preditiva <b>estima</b> o futuro; quem <b>recomenda a ação</b> é a prescritiva. A descritiva é a mais simples e a prescritiva, a mais complexa e de maior valor.</p>
+
+<h2 id="s5">1.3 Processos de referência</h2>
+<ul>
+<li><b>CRISP-DM</b> (processo padrão para mineração de dados), com 6 fases cíclicas: <b>entendimento do negócio</b>, entendimento dos dados, preparação dos dados, modelagem, avaliação e implantação. A fase que costuma consumir mais tempo é a <b>preparação dos dados</b>.</li>
+<li><b>KDD</b> (descoberta de conhecimento em bases de dados): seleção, pré-processamento, transformação, <b>mineração de dados</b> e interpretação ou avaliação. A mineração (data mining) é <b>uma etapa</b> do KDD, não o processo inteiro.</li>
+</ul>
+
+<h2 id="s6">1.4 Aplicações na Administração Pública, no controle e nas finanças</h2>
+<ul>
+<li><b>Fiscalização tributária:</b> seleção de contribuintes por risco, malha fiscal, cruzamento de NF-e, EFD e declarações para achar omissões de receita.</li>
+<li><b>Controle e auditoria:</b> trilhas de auditoria, <b>auditoria contínua</b>, detecção de fraudes em licitações (sobrepreço, empresas ligadas, fracionamento), cruzamento da folha de pagamento com bases de óbitos.</li>
+<li><b>Finanças e orçamento:</b> previsão de receita, análise da execução da despesa, custos e qualidade do gasto.</li>
+<li><b>Transparência:</b> dados abertos e painéis públicos, sempre observando a <b>LGPD</b> (Lei 13.709/2018) no tratamento de dados pessoais.</li>
+</ul>
+
+<h1 id="s7">2. Dados estruturados, semiestruturados e não estruturados</h1>
+<div class="tab"><table>
+<tr><th>Tipo</th><th>Características</th><th>Exemplos</th></tr>
+<tr><td><b>Estruturados</b></td><td>Esquema rígido e definido antes (linhas e colunas); fáceis de consultar com SQL.</td><td>Tabelas de banco relacional, cadastro de contribuintes, planilhas organizadas.</td></tr>
+<tr><td><b>Semiestruturados</b></td><td>Não seguem tabela rígida, mas têm <b>marcadores</b> (tags, chaves) que organizam o conteúdo; esquema flexível e autodescritivo.</td><td><b>XML</b> (como o arquivo da NF-e), <b>JSON</b>, logs, e-mail (cabeçalho estruturado + corpo livre).</td></tr>
+<tr><td><b>Não estruturados</b></td><td>Sem modelo predefinido; exigem técnicas específicas (processamento de linguagem natural, visão computacional). São a <b>maior parte</b> dos dados produzidos.</td><td>Textos livres, PDFs, imagens, áudio, vídeo, redes sociais.</td></tr>
+</table></div>
+<ul>
+<li><b>Data warehouse</b>: guarda dados já tratados e integrados, com esquema definido na gravação (<i>schema on write</i>). Bom para relatórios e BI.</li>
+<li><b>Data lake</b>: guarda dados em formato bruto, de todos os tipos, e o esquema é aplicado na leitura (<i>schema on read</i>). Bom para ciência de dados e exploração.</li>
+</ul>
+<p><b>Para lembrar:</b> o data warehouse é um <b>armário organizado</b>, com cada coisa na sua gaveta (arrumou antes de guardar). O data lake é um <b>depósito</b> onde tudo entra do jeito que veio (arruma só quando for usar).</p>
+<p class="nota">Pegadinha: XML e JSON são <b>semiestruturados</b>, não estruturados. O PDF de uma nota digitalizada é <b>não estruturado</b>; o XML da NF-e é <b>semiestruturado</b>.</p>
+
+<h1 id="s8">3. Coleta, qualidade, tratamento, análise e interpretação de dados</h1>
+<h2 id="s9">3.1 Coleta</h2>
+<ul>
+<li><b>Fontes internas</b> (sistemas da própria organização: arrecadação, cadastro, folha) e <b>externas</b> (outros órgãos, dados abertos, convênios).</li>
+<li>Formas: consulta a banco de dados, arquivos, <b>APIs</b> (interfaces que entregam dados de forma padronizada), <b>web scraping</b>, sensores e formulários.</li>
+<li>Dados primários (coletados para o propósito da análise) x secundários (coletados por outro e reaproveitados).</li>
+</ul>
+<h2 id="s10">3.2 Qualidade de dados: as dimensões que mais caem</h2>
+<div class="tab"><table>
+<tr><th>Dimensão</th><th>Pergunta</th></tr>
+<tr><td><b>Acurácia (exatidão)</b></td><td>O dado representa corretamente a realidade?</td></tr>
+<tr><td><b>Completude</b></td><td>Há campos ou registros faltando?</td></tr>
+<tr><td><b>Consistência</b></td><td>O mesmo dado é igual em bases ou registros diferentes, sem contradição?</td></tr>
+<tr><td><b>Tempestividade (atualidade)</b></td><td>O dado está disponível e atualizado quando é preciso?</td></tr>
+<tr><td><b>Validade (conformidade)</b></td><td>Respeita o formato e as regras (CPF com dígito verificador válido, data possível)?</td></tr>
+<tr><td><b>Unicidade</b></td><td>Há registros duplicados?</td></tr>
+</table></div>
+<p>Regra de ouro: <b>"lixo entra, lixo sai"</b> (<i>garbage in, garbage out</i>). Modelo bom com dado ruim gera conclusão ruim.</p>
+<h2 id="s11">3.3 Tratamento (preparação)</h2>
+<ul>
+<li><b>Limpeza:</b> corrigir erros, padronizar formatos (datas, nomes, CNPJ), remover duplicatas.</li>
+<li><b>Valores ausentes:</b> excluir o registro ou <b>imputar</b> um valor (média, mediana, valor mais frequente, modelo).</li>
+<li><b>Outliers:</b> investigar antes de remover; no controle, o valor fora do padrão pode ser justamente a fraude.</li>
+<li><b>Transformação:</b> normalização (escala de 0 a 1, min-max) e padronização (z-score, média 0 e desvio 1), agregação, criação de variáveis.</li>
+<li><b>Integração:</b> juntar bases por uma chave comum (CPF, CNPJ, inscrição estadual).</li>
+<li><b>ETL</b> (extrair, transformar, carregar): transforma antes de carregar no destino, típico de data warehouse. <b>ELT</b>: carrega bruto e transforma depois, típico de data lake e nuvem. Pense numa cozinha: <b>extrair</b> é buscar os ingredientes, <b>transformar</b> é lavar e cortar, <b>carregar</b> é servir no prato.</li>
+</ul>
+<h2 id="s12">3.4 Análise e interpretação</h2>
+<ul>
+<li><b>Análise exploratória (EDA):</b> primeira olhada nos dados com estatística descritiva e gráficos, para entender a distribuição e achar problemas.</li>
+<li><b>Medidas de posição:</b> média, mediana (menos sensível a outliers) e moda. <b>Medidas de dispersão:</b> amplitude, variância, desvio padrão, quartis.</li>
+<li><b>Interpretação:</b> considerar o contexto, o tamanho da amostra e os vieses. <b>Correlação não implica causalidade</b>.</li>
+</ul>
+
+<h1 id="s13">4. Identificação de padrões, tendências, correlações e anomalias</h1>
+<div class="tab"><table>
+<tr><th>O que se busca</th><th>Como</th></tr>
+<tr><td><b>Padrões</b></td><td>Agrupamento (<i>clustering</i>, como k-means), regras de associação (quem compra A também compra B), classificação.</td></tr>
+<tr><td><b>Tendências</b></td><td>Séries temporais, com quatro componentes: <b>tendência</b> (direção de longo prazo), <b>sazonalidade</b> (repetição em períodos fixos, como o pico de arrecadação em dezembro), <b>ciclo</b> (oscilações longas e irregulares) e <b>ruído</b> (variação aleatória).</td></tr>
+<tr><td><b>Correlações</b></td><td>Coeficiente de <b>Pearson</b>, de -1 a +1, mede relação <b>linear</b>: +1 é perfeita positiva, -1 é perfeita negativa, 0 é ausência de relação linear. <b>Spearman</b> usa postos e capta relação monotônica.</td></tr>
+<tr><td><b>Anomalias (outliers)</b></td><td>Valores muito distantes do padrão: <b>z-score</b> acima de 3 em módulo; regra do <b>IQR</b> (abaixo de Q1 menos 1,5 IQR ou acima de Q3 mais 1,5 IQR); boxplot; modelos de detecção de anomalias.</td></tr>
+</table></div>
+<ul>
+<li><b>Lei de Benford:</b> em muitos conjuntos de dados financeiros naturais, o primeiro dígito <b>1 aparece em cerca de 30%</b> dos números, e a frequência cai até o dígito 9 (cerca de 4,6%). Desvios grandes podem indicar manipulação. É técnica clássica de auditoria.</li>
+<li>Regras de associação usam <b>suporte</b> (frequência do conjunto), <b>confiança</b> (probabilidade de B dado A) e <b>lift</b> (força da associação; acima de 1 indica associação positiva).</li>
+</ul>
+<p class="nota">Pegadinha: correlação próxima de zero indica ausência de relação <b>linear</b>, não de qualquer relação. E duas variáveis podem ser fortemente correlacionadas sem que uma cause a outra (pode haver uma terceira variável por trás).</p>
+
+<h1 id="s14">5. Business Intelligence e Visualização de Dados</h1>
+<h2 id="s15">5.1 Business Intelligence (BI) e analytics</h2>
+<ul>
+<li><b>BI</b>: conjunto de processos, tecnologias e ferramentas que coletam, integram, armazenam e analisam dados para transformar em informação útil à <b>tomada de decisão</b>. Foco tradicional: <b>o que aconteceu</b> (análise descritiva e diagnóstica).</li>
+<li><b>Analytics</b> (análise avançada): vai além, com análise preditiva e prescritiva, estatística e aprendizado de máquina.</li>
+<li><b>Arquitetura típica:</b> fontes de dados, <b>ETL</b>, <b>data warehouse</b> (ou data marts), camada <b>OLAP</b>, relatórios e dashboards.</li>
+<li><b>Data warehouse</b> (Inmon): orientado por assunto, integrado, <b>não volátil</b> e variável no tempo (histórico). <b>Data mart</b>: subconjunto voltado a uma área. Inmon parte do DW corporativo (de cima para baixo); Kimball parte dos data marts (de baixo para cima).</li>
+<li><b>Modelagem dimensional:</b> tabela <b>fato</b> (medidas numéricas, como valor arrecadado) cercada de tabelas <b>dimensão</b> (contexto: tempo, contribuinte, município). <b>Esquema estrela</b>: dimensões desnormalizadas ligadas direto à fato. <b>Floco de neve</b>: dimensões normalizadas em subtabelas.</li>
+<li><b>Operações OLAP:</b> <b>drill down</b> (detalhar: ano, depois mês), <b>roll up</b> (agregar: mês, depois ano), <b>slice</b> (fixar um valor de uma dimensão), <b>dice</b> (subcubo com filtros em várias dimensões), <b>pivot</b> (girar os eixos).</li>
+<li><b>Para lembrar o OLAP:</b> imagine a arrecadação num cubo com três lados (tempo, município, setor). <b>Drill down</b> = dar zoom (do ano para o mês). <b>Roll up</b> = afastar o zoom (do mês para o ano). <b>Slice</b> = cortar uma fatia (só o ano de 2025). <b>Dice</b> = cortar um cubinho (2025, Florianópolis, comércio). <b>Pivot</b> = girar a tabela (trocar linhas por colunas), como na tabela dinâmica do Excel.</li>
+</ul>
+<h2 id="s16">5.2 Data mining e web scraping</h2>
+<ul>
+<li><b>Data mining</b>: descoberta automática de padrões em grandes bases. Tarefas: <b>classificação</b> e <b>regressão</b> (preditivas, supervisionadas), <b>agrupamento</b> e <b>associação</b> (descritivas, não supervisionadas), detecção de anomalias.</li>
+<li><b>Web scraping</b>: extração automatizada de dados de páginas web, lendo o HTML com um programa. Exige cuidado com os termos de uso dos sites, com a carga sobre o servidor e com a LGPD quando houver dados pessoais. Diferente de API, que é a forma "oficial" de o site entregar dados.</li>
+</ul>
+<h2 id="s17">5.3 Indicadores, métricas, relatórios e dashboards</h2>
+<ul>
+<li><b>Métrica</b>: qualquer medida quantitativa (número de autuações). <b>Indicador</b>: métrica que mostra o desempenho em relação a um objetivo. <b>KPI</b> (indicador-chave de desempenho): os poucos indicadores mais importantes para a estratégia, com meta.</li>
+<li>No setor público: <b>eficiência</b> (relação entre recursos usados e produtos), <b>eficácia</b> (alcance das metas), <b>efetividade</b> (impacto na sociedade) e <b>economicidade</b> (menor custo, sem perder qualidade).</li>
+<li>Bons indicadores costumam ser <b>SMART</b>: específicos, mensuráveis, alcançáveis, relevantes e com prazo.</li>
+<li><b>Relatório gerencial</b>: informação organizada para o gestor. <b>Dashboard</b>: painel visual que reúne os principais indicadores numa só tela, com atualização frequente e, em geral, interativo (filtros e drill down). Pode ser estratégico, tático ou operacional.</li>
+</ul>
+<h2 id="s18">5.4 Qual gráfico usar</h2>
+<div class="tab"><table>
+<tr><th>Objetivo</th><th>Gráfico mais indicado</th></tr>
+<tr><td>Evolução no tempo</td><td><b>Linha</b></td></tr>
+<tr><td>Comparar categorias</td><td><b>Barras</b> (ou colunas)</td></tr>
+<tr><td>Partes de um todo (poucas categorias)</td><td>Pizza ou rosca; barras empilhadas</td></tr>
+<tr><td>Relação entre duas variáveis</td><td><b>Dispersão</b></td></tr>
+<tr><td>Distribuição de uma variável</td><td><b>Histograma</b></td></tr>
+<tr><td>Distribuição, mediana e outliers</td><td><b>Boxplot</b></td></tr>
+<tr><td>Intensidade em matriz ou mapa</td><td>Mapa de calor; mapa coroplético</td></tr>
+</table></div>
+<p class="nota">Boas práticas: barras começam no zero; evitar 3D e enfeites que distorcem; poucas cores, com significado; título que diga a conclusão.</p>
+
+<h1 id="s19">6. Uso de ferramentas analíticas para extração, cruzamento, interpretação e comunicação de informações</h1>
+<ul>
+<li><b>Planilhas</b> (Excel): filtros, fórmulas de busca (PROCV ou PROCX), <b>tabela dinâmica</b> para resumir e cruzar dados.</li>
+<li><b>SQL</b>: linguagem de consulta a bancos relacionais. SELECT escolhe colunas; WHERE filtra linhas; <b>JOIN</b> cruza tabelas por uma chave (INNER JOIN traz só o que casa nas duas; LEFT JOIN traz tudo da tabela da esquerda); GROUP BY agrega; <b>HAVING</b> filtra grupos depois da agregação. Se você já usou o <b>PROCV</b> no Excel para trazer dados de outra planilha pelo CNPJ, você já fez um JOIN.</li>
+<li><b>Ferramentas de BI</b> (Power BI, Tableau, Qlik): conectam fontes, tratam os dados (no Power BI, o <b>Power Query</b>) e montam dashboards.</li>
+<li><b>Linguagens</b> como Python (biblioteca pandas) e R, para análises estatísticas e aprendizado de máquina.</li>
+<li><b>Cruzamento de bases</b> é a essência da fiscalização: NF-e emitidas contra a escrituração (EFD); vendas com cartão contra a receita declarada; folha de pagamento contra óbitos ou contra quadros societários de fornecedores.</li>
+<li><b>Comunicação</b>: <i>storytelling</i> com dados, ou seja, contar a conclusão com contexto, poucos números certos e o gráfico adequado ao público.</li>
+</ul>
+
+<h1 id="s20">7. Governo Digital e Inteligência Artificial</h1>
+<h2 id="s21">7.1 Governo Digital, transformação digital e serviços públicos digitais</h2>
+<ul>
+<li><b>Governo digital</b>: uso de tecnologias digitais para entregar serviços e políticas públicas, simplificar a relação com o cidadão e aumentar a transparência e a eficiência.</li>
+<li><b>Transformação digital</b> é mais que digitalizar papel: é <b>redesenhar processos e serviços</b> a partir da tecnologia, com foco no usuário.</li>
+<li><b>Lei do Governo Digital (Lei 14.129/2021)</b>: princípios e regras para o governo digital e a eficiência pública. Ideias que aparecem em prova: serviços prestados preferencialmente de forma digital, plataforma única de acesso (gov.br no âmbito federal), <b>interoperabilidade</b> entre órgãos, <b>dados abertos</b>, linguagem clara e não exigir do cidadão documento ou informação que o próprio poder público já tenha. Para Estados e Municípios, ela se aplica quando adotada por <b>ato normativo próprio</b>.</li>
+<li><b>Interoperabilidade</b>: capacidade de sistemas diferentes trocarem e usarem dados entre si, com padrões comuns.</li>
+<li><b>Automação</b>: uso de software para executar tarefas repetitivas sem intervenção humana, como a <b>RPA</b> (automação robótica de processos), que imita ações de um usuário em telas e sistemas.</li>
+<li><b>Administração Pública orientada por dados</b>: decisões, políticas e controles baseados em evidências e indicadores, e não só em intuição ou costume.</li>
+</ul>
+<h2 id="s22">7.2 Inteligência Artificial e aprendizado de máquina</h2>
+<ul>
+<li><b>IA</b>: sistemas que executam tarefas que normalmente exigiriam inteligência humana (reconhecer padrões, entender linguagem, decidir).</li>
+<li><b>Aprendizado de máquina</b>: subárea da IA em que o sistema <b>aprende com dados</b>, sem ser programado regra por regra. <b>Aprendizado profundo</b> (deep learning) é uma subárea do aprendizado de máquina que usa redes neurais com muitas camadas.</li>
+</ul>
+<div class="tab"><table>
+<tr><th>Tipo de aprendizado</th><th>Como funciona</th><th>Exemplos</th></tr>
+<tr><td><b>Supervisionado</b></td><td>Treina com exemplos <b>rotulados</b> (entrada e resposta certa).</td><td><b>Classificação</b> (sonegador ou não), <b>regressão</b> (prever valor de arrecadação).</td></tr>
+<tr><td><b>Não supervisionado</b></td><td>Dados <b>sem rótulo</b>; o algoritmo encontra a estrutura.</td><td><b>Agrupamento</b> de contribuintes parecidos, regras de associação, redução de dimensionalidade.</td></tr>
+<tr><td><b>Por reforço</b></td><td>Um agente aprende por tentativa e erro, recebendo <b>recompensas</b> ou punições.</td><td>Jogos, robótica, otimização de decisões em sequência.</td></tr>
+</table></div>
+<ul>
+<li><b>Treino, validação e teste:</b> o modelo é avaliado em dados que <b>não viu no treino</b>. <b>Overfitting</b> (sobreajuste): decora o treino e erra em dados novos. <b>Underfitting</b>: modelo simples demais, erra até no treino. É como o aluno que <b>decorou as respostas do simulado</b> (overfitting): vai mal na prova de verdade, porque não entendeu a matéria.</li>
+<li><b>Métricas de classificação:</b> acurácia (acertos sobre o total), <b>precisão</b> (dos que o modelo apontou como positivos, quantos são mesmo), <b>recall</b> ou sensibilidade (dos positivos reais, quantos o modelo achou) e F1 (média harmônica das duas). Em fraude, base desbalanceada torna a acurácia enganosa.</li>
+</ul>
+<h2 id="s23">7.3 IA generativa e modelos de linguagem de grande porte (LLMs)</h2>
+<ul>
+<li><b>IA generativa</b>: modelos que <b>criam conteúdo novo</b> (texto, imagem, áudio, código) a partir do que aprenderam, em vez de só classificar ou prever.</li>
+<li><b>LLM</b>: modelo de linguagem treinado com enorme volume de texto para prever a próxima unidade de texto (<b>token</b>). Base da maioria dos LLMs: a arquitetura <b>transformer</b>, com o mecanismo de <b>atenção</b>.</li>
+<li>Conceitos práticos: <b>prompt</b> (instrução dada ao modelo); <b>janela de contexto</b> (quanto texto o modelo considera de uma vez); <b>ajuste fino</b> (<i>fine-tuning</i>, treino adicional para uma tarefa); <b>RAG</b> (geração aumentada por recuperação, que busca documentos e os entrega ao modelo para responder com base neles).</li>
+<li><b>Riscos:</b> <b>alucinação</b> (resposta falsa dita com segurança), viés herdado dos dados, vazamento de dados sigilosos ou pessoais (LGPD e sigilo fiscal), falta de explicabilidade. Por isso: <b>supervisão humana</b>, conferência das fontes e não inserir dado protegido em ferramenta sem autorização.</li>
+</ul>
+<p class="nota">Pegadinha: IA generativa não "consulta a verdade"; ela gera o texto mais provável. Por isso pode errar com confiança. Aprendizado de máquina é parte da IA, e deep learning é parte do aprendizado de máquina (não o contrário).</p>
+
+<h1 id="s24">8. Revisão de véspera</h1>
+<div class="tab"><table>
+<tr><th>Tema</th><th>O que não pode errar</th></tr>
+<tr><td>Tipos de análise</td><td>Descritiva (o que), diagnóstica (por que), preditiva (o que vai), prescritiva (o que fazer).</td></tr>
+<tr><td>Tipos de dados</td><td>Estruturado = tabela; semiestruturado = XML, JSON (tags); não estruturado = texto livre, imagem, áudio, PDF.</td></tr>
+<tr><td>Qualidade</td><td>Acurácia, completude, consistência, tempestividade, validade, unicidade.</td></tr>
+<tr><td>Processos</td><td>CRISP-DM em 6 fases, começando pelo entendimento do negócio. Data mining é uma etapa do KDD.</td></tr>
+<tr><td>Correlação</td><td>Pearson de -1 a +1, relação linear. Correlação não é causalidade.</td></tr>
+<tr><td>Anomalias</td><td>z-score acima de 3; regra do IQR (1,5); Lei de Benford (dígito 1 em cerca de 30%).</td></tr>
+<tr><td>BI</td><td>ETL, DW (não volátil, histórico), fato e dimensão, estrela x floco de neve, drill down, roll up, slice, dice, pivot.</td></tr>
+<tr><td>Indicadores</td><td>Métrica x indicador x KPI. Eficiência, eficácia, efetividade, economicidade.</td></tr>
+<tr><td>Ferramentas</td><td>SQL: JOIN cruza, GROUP BY agrega, HAVING filtra grupo. Tabela dinâmica. Power Query trata dados no Power BI.</td></tr>
+<tr><td>Governo digital</td><td>Transformar processos, não só digitalizar. Interoperabilidade, dados abertos, não pedir ao cidadão o que o governo já tem. Lei 14.129/2021.</td></tr>
+<tr><td>IA</td><td>Supervisionado (rótulo) x não supervisionado (sem rótulo) x reforço (recompensa). Overfitting. IA generativa cria conteúdo; LLM prevê tokens (transformer); alucinação e supervisão humana.</td></tr>
+</table></div>
+</div></body></html>
