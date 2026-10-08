@@ -173,14 +173,14 @@ const Q = QUESTOES.map((q,i)=>{
 const estado = {}, chutes = {}; let filtro = "Todas";
 function salvar(){ try{ localStorage.setItem("ce-dados-v1", JSON.stringify(estado)); localStorage.setItem("ce-dados-v1-chute", JSON.stringify(chutes)); }catch(e){} }
 try{ Object.assign(estado, JSON.parse(localStorage.getItem("ce-dados-v1")||"{}")); Object.assign(chutes, JSON.parse(localStorage.getItem("ce-dados-v1-chute")||"{}")); }catch(e){}
-const temas = ["Todas", ...new Set(Q.map(q=>q.t)), "Não respondidas", "Erradas", "Chutadas"];
+const temas = ["Todas", ...new Set(Q.filter(q=>!q.o).map(q=>q.t)), "Concurso (todas)", ...new Set(Q.filter(q=>q.o).map(q=>q.t)), "Não respondidas", "Erradas", "Chutadas"];
 function renderFiltros(){
   document.getElementById("filtros").innerHTML = temas.map(t=>`<button class="chip ${t===filtro?"on":""}" data-f="${t}">${t}</button>`).join(" ");
 }
 function render(){
   const el = document.getElementById("lista"); el.innerHTML = "";
   Q.forEach((q,i)=>{
-    if (filtro==="Chutadas" ? !chutes[i] : filtro==="Não respondidas" ? estado[i]!==undefined : filtro==="Erradas" ? !(estado[i]!==undefined && estado[i]!==-1 && estado[i]!==q.correta) : (filtro!=="Todas" && q.t!==filtro)) return;
+    if (filtro==="Concurso (todas)" ? !q.o : filtro==="Chutadas" ? !chutes[i] : filtro==="Não respondidas" ? estado[i]!==undefined : filtro==="Erradas" ? !(estado[i]!==undefined && estado[i]!==-1 && estado[i]!==q.correta) : (filtro!=="Todas" && q.t!==filtro)) return;
     const esc = estado[i]; const resp = esc!==undefined;
     const pag = (typeof PAGINAS!=="undefined" && PAGINAS[q.k]) ? PAGINAS[q.k] : null;
     const d = document.createElement("div"); d.className="q";
