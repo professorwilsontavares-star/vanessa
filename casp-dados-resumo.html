@@ -187,7 +187,7 @@ Quatro perguntas da análise: <b>descritiva</b> (o que aconteceu), <b>diagnósti
 </ul>
 <h2 id="s19">5.3 Indicadores, métricas, relatórios e dashboards</h2>
 <ul>
-<li><b>Métrica</b>: qualquer medida quantitativa (número de autuações). <b>Indicador</b>: métrica que mostra o desempenho em relação a um objetivo. <b>KPI</b> (indicador-chave de desempenho): os poucos indicadores mais importantes para a estratégia, com meta.</li>
+<li><b>Métrica</b>: qualquer medida quantitativa (número de autuações). <b>Indicador</b>: métrica que mostra o desempenho em relação a um objetivo. <b>KPI</b> (indicador-chave de desempenho): os poucos indicadores mais importantes para a estratégia, com meta. Todo KPI é indicador, mas <b>nem todo indicador é KPI</b>: só vira KPI o que é eleito como crítico para acompanhar um objetivo estratégico.</li>
 <li>No setor público: <b>eficiência</b> (relação entre recursos usados e produtos), <b>eficácia</b> (alcance das metas), <b>efetividade</b> (impacto na sociedade) e <b>economicidade</b> (menor custo, sem perder qualidade).</li>
 <li>Bons indicadores costumam ser <b>SMART</b>: específicos, mensuráveis, alcançáveis, relevantes e com prazo.</li>
 <li><b>Relatório gerencial</b>: informação organizada para o gestor. <b>Dashboard</b>: painel visual que reúne os principais indicadores numa só tela, com atualização frequente e, em geral, interativo (filtros e drill down). Pode ser estratégico, tático ou operacional.</li>
@@ -210,8 +210,10 @@ Quatro perguntas da análise: <b>descritiva</b> (o que aconteceu), <b>diagnósti
 <tr><td>Para quê</td><td>Registrar operações (emitir nota, pagar)</td><td>Analisar e decidir</td></tr>
 <tr><td>Dados</td><td>Atuais, detalhados, mudam toda hora (voláteis)</td><td>Históricos, resumidos, não voláteis</td></tr>
 <tr><td>Operações</td><td>Muitas e curtas: INSERT, UPDATE, DELETE</td><td>Poucas e pesadas: consultas que podem levar muito tempo</td></tr>
-<tr><td>Modelo</td><td>Normalizado (evita repetição)</td><td>Dimensional, desnormalizado (estrela)</td></tr>
+<tr><td>Modelo</td><td>Normalizado, em geral na 3ª forma normal (evita repetição para gravar com segurança)</td><td>Dimensional, desnormalizado (estrela); aceita <b>redundância controlada</b> para ler mais rápido</td></tr>
+<tr><td>Volume por operação</td><td>Pequena porção de dados a cada vez, acessada o tempo todo</td><td>Varre grandes volumes de histórico, em análises periódicas</td></tr>
 </table></div>
+<p class="nota">Bizu: <b>normalizar para gravar é OLTP; desnormalizar para ler é DW.</b> As bancas invertem as colunas desta tabela (FGV CGE-SC 2023): "normalização é essencial no DW", "analítico usa pouco dado", "DW acessado para a operação diária", "DW atualizado por UPDATE". No esquema estrela a redundância <b>não é problema</b>.</p>
 <ul>
 <li><b>Não volátil</b>: o dado entra no DW e não é alterado nem apagado, só consultado. Por isso não há disputa entre usuários para alterar o mesmo registro. Carga de novos lotes não torna o DW volátil. <b>Integrado</b> não é "fonte única": o DW junta muitas fontes e padroniza. "Variável no tempo" não é "atualizado em tempo real".</li>
 <li><b>Inmon x Kimball a fundo:</b> Inmon monta primeiro o DW corporativo <b>normalizado</b> (terceira forma normal) e dele derivam os data marts. Kimball monta data marts <b>dimensionais</b> ligados por <b>dimensões conformadas</b> (as mesmas para todos: a mesma dimensão Tempo, o mesmo cadastro de contribuinte); para ele, o DW é a união desses data marts. Por isso "DW é normalizado" depende do autor: certo em Inmon, errado no modelo dimensional.</li>
